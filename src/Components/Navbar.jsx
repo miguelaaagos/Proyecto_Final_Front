@@ -7,7 +7,7 @@ import { BiSearch } from 'react-icons/bi';
 
 
 
-function FormExample() {
+function NavBar() {
   return (
     <Navbar className="bg-body-tertiary p-3">
       <Form inline className="mx-auto">
@@ -24,4 +24,4 @@ function FormExample() {
   );
 }
 
-export default FormExample;
+export default NavBar;
