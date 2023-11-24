@@ -1,8 +1,6 @@
 import Navbar from './Components/Navbar'
-
-import Card from './Components/Card'
-
 import Carrusel from './Components/Carrusel'
+import Card from './Components/Card'
 import Header from './Components/Header'
 import Footer from './Components/Footer'
 
@@ -11,13 +9,11 @@ import Footer from './Components/Footer'
 function App() {
   return (
     <>
-     <Navbar />
-
-     <Card/>
-
-     <Carrusel />
-     <Header />
-     <Footer />
+    <Navbar />
+    <Carrusel />
+    <Card/>
+    <Header />
+    <Footer />
 
     </>
    

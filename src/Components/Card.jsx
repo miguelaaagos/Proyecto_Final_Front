@@ -1,10 +1,7 @@
 import { FaCartPlus } from "react-icons/fa"
 
-
 export const Cards = () => {
-
   return (
-
     <>
 
       <div className="card" style={{ width: '18rem' }}>
@@ -22,20 +19,10 @@ export const Cards = () => {
           <a href="#" className="btn btn-dark"> 
             Comprar
        </a> 
-       
        <FaCartPlus className="" />
-       
-       
-          
-          
         </div>
       </div>
-
-
-
-
     </>
-
   )
 }
 
