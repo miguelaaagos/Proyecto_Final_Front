@@ -1,145 +1,164 @@
-{
-    "zapatillas": [
-      {
-        "imagen": "url_imagen_1.jpg",
-        "marca": "Nike",
-        "modelo": "Air Max 90",
-        "año": 2022,
-        "precio": 120.99
-      },
-      {
-        "imagen": "url_imagen_2.jpg",
-        "marca": "Adidas",
-        "modelo": "Ultra Boost",
-        "año": 2021,
-        "precio": 129.99
-      },
-      {
-        "imagen": "url_imagen_3.jpg",
-        "marca": "Puma",
-        "modelo": "Cali",
-        "año": 2022,
-        "precio": 89.99
-      },
-      {
-        "imagen": "url_imagen_4.jpg",
-        "marca": "Reebok",
-        "modelo": "Classic Leather",
-        "año": 2020,
-        "precio": 79.99
-      },
-      {
-        "imagen": "url_imagen_5.jpg",
-        "marca": "Converse",
-        "modelo": "Chuck Taylor All Star",
-        "año": 2021,
-        "precio": 59.99
-      },
-      {
-        "imagen": "url_imagen_6.jpg",
-        "marca": "Vans",
-        "modelo": "Old Skool",
-        "año": 2022,
-        "precio": 69.99
-      },
-      {
-        "imagen": "url_imagen_7.jpg",
-        "marca": "New Balance",
-        "modelo": "990v5",
-        "año": 2020,
-        "precio": 174.99
-      },
-      {
-        "imagen": "url_imagen_8.jpg",
-        "marca": "Asics",
-        "modelo": "Gel-Kayano 27",
-        "año": 2021,
-        "precio": 149.99
-      },
-      {
-        "imagen": "url_imagen_9.jpg",
-        "marca": "Under Armour",
-        "modelo": "HOVR Phantom",
-        "año": 2022,
-        "precio": 139.99
-      },
-      {
-        "imagen": "url_imagen_10.jpg",
-        "marca": "Saucony",
-        "modelo": "Kinvara 12",
-        "año": 2021,
-        "precio": 109.99
-      },
-      {
-        "imagen": "url_imagen_11.jpg",
-        "marca": "Brooks",
-        "modelo": "Ghost 14",
-        "año": 2022,
-        "precio": 129.99
-      },
-      {
-        "imagen": "url_imagen_12.jpg",
-        "marca": "Mizuno",
-        "modelo": "Wave Rider 25",
-        "año": 2021,
-        "precio": 119.99
-      },
-      {
-        "imagen": "url_imagen_13.jpg",
-        "marca": "Salomon",
-        "modelo": "Speedcross 5",
-        "año": 2020,
-        "precio": 129.99
-      },
-      {
-        "imagen": "url_imagen_14.jpg",
-        "marca": "Hoka One One",
-        "modelo": "Clifton 8",
-        "año": 2022,
-        "precio": 149.99
-      },
-      {
-        "imagen": "url_imagen_15.jpg",
-        "marca": "Fila",
-        "modelo": "Disruptor II",
-        "año": 2021,
-        "precio": 79.99
-      },
-      {
-        "imagen": "url_imagen_16.jpg",
-        "marca": "Lacoste",
-        "modelo": "Lerond",
-        "año": 2022,
-        "precio": 89.99
-      },
-      {
-        "imagen": "url_imagen_17.jpg",
-        "marca": "DC Shoes",
-        "modelo": "Court Graffik",
-        "año": 2021,
-        "precio": 59.99
-      },
-      {
-        "imagen": "url_imagen_18.jpg",
-        "marca": "Merrell",
-        "modelo": "Moab 2",
-        "año": 2020,
-        "precio": 99.99
-      },
-      {
-        "imagen": "url_imagen_19.jpg",
-        "marca": "Etnies",
-        "modelo": "Jameson 2 Eco",
-        "año": 2022,
-        "precio": 69.99
-      },
-      {
-        "imagen": "url_imagen_20.jpg",
-        "marca": "Timberland",
-        "modelo": "Killington",
-        "año": 2021,
-        "precio": 129.99
-      }
-    ]
-  }
+[
+    {
+      "id": 1,
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIgN7jXtARyW2Xo4hm1YxcVF7VJ0d21NPv2ixGSqA3XdzJAcMQbXijM3rlOLg2LX9X26I&usqp=CAU",
+      "marca": "Nike",
+      "modelo": "Air Max 90",
+      "año": 2022,
+      "precio": 120.99
+    },
+    {
+      "id": 2,
+      "imagen": "https://sparta.cl/media/catalog/product/d/c/dc3728-003-phsrh000.png?quality=80&bg-color=255,255,255&fit=bounds&height=550&width=600&canvas=600:550",
+      "marca": "Adidas",
+      "modelo": "Ultra Boost",
+      "año": 2021,
+      "precio": 129.99
+    },
+    {
+      "id": 3,
+      "imagen": "https://static.theline.cl/img/products/DQ8426-301-1_1024.png",
+      "marca": "Puma",
+      "modelo": "Cali",
+      "año": 2022,
+      "precio": 89.99
+    },
+    {
+      "id": 4,
+      "imagen": "https://http2.mlstatic.com/D_NQ_NP_754815-MLC69653323991_052023-O.webp",
+      "marca": "Reebok",
+      "modelo": "Classic Leather",
+      "año": 2020,
+      "precio": 79.99
+    },
+    {
+      "id": 5,
+      "imagen": "url_imagen_5.jpg",
+      "marca": "Converse",
+      "modelo": "Chuck Taylor All Star",
+      "año": 2021,
+      "precio": 59.99
+    },
+    {
+      "id": 6,
+      "imagen": "url_imagen_6.jpg",
+      "marca": "Vans",
+      "modelo": "Old Skool",
+      "año": 2022,
+      "precio": 69.99
+    },
+    {
+      "id": 7,
+      "imagen": "url_imagen_7.jpg",
+      "marca": "New Balance",
+      "modelo": "990v5",
+      "año": 2020,
+      "precio": 174.99
+    },
+    {
+      "id": 8,
+      "imagen": "url_imagen_8.jpg",
+      "marca": "Asics",
+      "modelo": "Gel-Kayano 27",
+      "año": 2021,
+      "precio": 149.99
+    },
+    {
+      "id": 9,
+      "imagen": "url_imagen_9.jpg",
+      "marca": "Under Armour",
+      "modelo": "HOVR Phantom",
+      "año": 2022,
+      "precio": 139.99
+    },
+    {
+      "id": 10,
+      "imagen": "url_imagen_10.jpg",
+      "marca": "Saucony",
+      "modelo": "Kinvara 12",
+      "año": 2021,
+      "precio": 109.99
+    },
+    {
+      "id": 11,
+      "imagen": "url_imagen_11.jpg",
+      "marca": "Brooks",
+      "modelo": "Ghost 14",
+      "año": 2022,
+      "precio": 129.99
+    },
+    {
+      "id": 12,
+      "imagen": "url_imagen_12.jpg",
+      "marca": "Mizuno",
+      "modelo": "Wave Rider 25",
+      "año": 2021,
+      "precio": 119.99
+    },
+    {
+      "id": 13,
+      "imagen": "url_imagen_13.jpg",
+      "marca": "Salomon",
+      "modelo": "Speedcross 5",
+      "año": 2020,
+      "precio": 129.99
+    },
+    {
+      "id": 14,
+      "imagen": "url_imagen_14.jpg",
+      "marca": "Hoka One One",
+      "modelo": "Clifton 8",
+      "año": 2022,
+      "precio": 149.99
+    },
+    {
+      "id": 15,
+      "imagen": "url_imagen_15.jpg",
+      "marca": "Fila",
+      "modelo": "Disruptor II",
+      "año": 2021,
+      "precio": 79.99
+    },
+    {
+      "id": 16,
+      "imagen": "url_imagen_16.jpg",
+      "marca": "Lacoste",
+      "modelo": "Lerond",
+      "año": 2022,
+      "precio": 89.99
+    },
+    {
+      "id": 17,
+      "imagen": "url_imagen_17.jpg",
+      "marca": "DC Shoes",
+      "modelo": "Court Graffik",
+      "año": 2021,
+      "precio": 59.99
+    },
+    {
+      "id": 18,
+      "imagen": "url_imagen_18.jpg",
+      "marca": "Merrell",
+      "modelo": "Moab 2",
+      "año": 2020,
+      "precio": 99.99
+    },
+    {
+      "id": 19,
+      "imagen": "url_imagen_19.jpg",
+      "marca": "Etnies",
+      "modelo": "Jameson 2 Eco",
+      "año": 2022,
+      "precio": 69.99
+    },
+    {
+      "id": 20,
+      "imagen": "url_imagen_20.jpg",
+      "marca": "Timberland",
+      "modelo": "Killington",
+      "año": 2021,
+      "precio": 129.99
+    }
+  ]
+
   
