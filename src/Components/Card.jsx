@@ -1,12 +1,9 @@
-// Card.js
 import React, { useContext } from "react";
-import { FaCartPlus } from "react-icons/fa";
-import { ShoesContext } from "../Context"; // Asegúrate de tener la ruta correcta
+import { Link } from "react-router-dom";
+import { ShoesContext } from "../Context";
 
 const Card = () => {
   const { shoes, carrito, setCarrito } = useContext(ShoesContext);
-
-  console.log("Datos de zapatillas en Card:", shoes);
 
   const addToCart = (zapatilla) => {
     setCarrito([...carrito, zapatilla]);
@@ -28,7 +25,9 @@ const Card = () => {
             <button className="btn btn-dark" onClick={() => addToCart(zapatilla)}>
               Comprar
             </button>
-            <FaCartPlus style={{ marginLeft: "10px" }} />
+            <Link to={`/detalles/${zapatilla.id}`} className="btn btn-dark">
+              Detalles
+            </Link>
           </div>
         </div>
       ))}
@@ -37,4 +36,5 @@ const Card = () => {
 };
 
 export default Card;
+
 

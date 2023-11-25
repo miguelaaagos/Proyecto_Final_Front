@@ -1,7 +1,7 @@
 [
     {
       "id": 1,
-      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIgN7jXtARyW2Xo4hm1YxcVF7VJ0d21NPv2ixGSqA3XdzJAcMQbXijM3rlOLg2LX9X26I&usqp=CAU",
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWApcGOgAxfefgrlE3KIyeYNDMTecfsJ3x7g&usqp=CAU",
       "marca": "Nike",
       "modelo": "Air Max 90",
       "año": 2022,
@@ -9,7 +9,7 @@
     },
     {
       "id": 2,
-      "imagen": "https://sparta.cl/media/catalog/product/d/c/dc3728-003-phsrh000.png?quality=80&bg-color=255,255,255&fit=bounds&height=550&width=600&canvas=600:550",
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfCbzh66Sd84Is9qVNZ-KPCjw1e0Glf0Ldug&usqp=CAU",
       "marca": "Adidas",
       "modelo": "Ultra Boost",
       "año": 2021,
@@ -17,7 +17,7 @@
     },
     {
       "id": 3,
-      "imagen": "https://static.theline.cl/img/products/DQ8426-301-1_1024.png",
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPPv_PLAUnLIOlhYHnMHzSs6C0DIE277Iubg&usqp=CAU",
       "marca": "Puma",
       "modelo": "Cali",
       "año": 2022,
@@ -25,7 +25,7 @@
     },
     {
       "id": 4,
-      "imagen": "https://http2.mlstatic.com/D_NQ_NP_754815-MLC69653323991_052023-O.webp",
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQgC5ROlh9XnD5iPUxOCMksNTeW10LS6G4h3VKWMOe_b6uZIEAnCU0eA5hBymb54tn1lUo&usqp=CAU",
       "marca": "Reebok",
       "modelo": "Classic Leather",
       "año": 2020,
