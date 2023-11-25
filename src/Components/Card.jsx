@@ -1,43 +1,40 @@
-import { FaCartPlus } from "react-icons/fa"
+// Card.js
+import React, { useContext } from "react";
+import { FaCartPlus } from "react-icons/fa";
+import { ShoesContext } from "../Context"; // Asegúrate de tener la ruta correcta
 
+const Card = () => {
+  const { shoes, carrito, setCarrito } = useContext(ShoesContext);
 
-export const Cards = () => {
+  console.log("Datos de zapatillas en Card:", shoes);
+
+  const addToCart = (zapatilla) => {
+    setCarrito([...carrito, zapatilla]);
+  };
 
   return (
-
-    <>
-
-      <div className="card" style={{ width: '18rem' }}>
-        <img
-          src="https://www.inseg.cl/upload/BOT%C3%8DN%20AZERO%20AMARILLO.png"
-          className="card-img-top"
-          alt="Zapatillas"
-        />
-        <div className="card-body">
-          <h5 className="card-title">Zapatos UltimateX90</h5>
-          <p className="card-text">
-          Estilo y seguridad se fusionan en nuestros zapatos de seguridad elegantes. Diseñados para destacar en cualquier entorno
-          </p>
-          <p className="card-text">Precio: $120.990</p>
-          <a href="#" className="btn btn-dark"> 
-            Comprar
-       </a> 
-       
-       <FaCartPlus className="" />
-       
-       
-          
-          
+    <div className="card-container d-flex flex-wrap justify-content-around">
+      {shoes.map((zapatilla) => (
+        <div key={zapatilla.id} className="card m-3 p-3" style={{ width: "18rem" }}>
+          <img
+            src={zapatilla.imagen}
+            className="card-img-top"
+            alt={`Zapatillas ${zapatilla.modelo}`}
+          />
+          <div className="card-body">
+            <h5 className="card-title">{`${zapatilla.marca} ${zapatilla.modelo}`}</h5>
+            <p className="card-text">{`Año: ${zapatilla.año}`}</p>
+            <p className="card-text">{`Precio: $${zapatilla.precio.toFixed(2)}`}</p>
+            <button className="btn btn-dark" onClick={() => addToCart(zapatilla)}>
+              Comprar
+            </button>
+            <FaCartPlus style={{ marginLeft: "10px" }} />
+          </div>
         </div>
-      </div>
+      ))}
+    </div>
+  );
+};
 
+export default Card;
 
-
-
-    </>
-
-  )
-}
-
-
-export default Cards;
