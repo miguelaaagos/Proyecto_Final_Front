@@ -1,16 +1,39 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
-const ModalContent = ({ email, setEmail, closeModal }) => {
+const ModalContent = ({ setEmail, closeModal }) => {
+  const [emailInput, setEmailInput] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    const navigate = useNavigate();
-
-    
-
     e.preventDefault();
+
+    const predefinedEmail = 'test@example.com';
+    const predefinedPassword = '123456';
+
+    if (emailInput === predefinedEmail && password === predefinedPassword) {
+      if (rememberMe) {
+        localStorage.setItem('rememberMe', emailInput);
+      } else {
+        localStorage.removeItem('rememberMe');
+      }
+      Swal.fire({
+        title: "Bienvenido!",
+        text: "Usuario logueado correctamente.",
+        icon: "success"
+      });
+      navigate('/');
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Oops... Correo o contraseña incorrectos.",
+        text: "Por favor, intente nuevamente.",
+        footer: '<a href="#">No recuerdas las credenciales</a>'
+      });
+    }
   };
 
   return (
@@ -18,10 +41,10 @@ const ModalContent = ({ email, setEmail, closeModal }) => {
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content bg-light text-dark p-5 rounded-lg cursor-pointer">
           <div className="modal-body">
-            <h3 className="text-2xl m-5 font-medium">Iniciar Sesión</h3>
+            <h3 className="text-2xl m-5 fw font-medium">Iniciar Sesión</h3>
             <form onSubmit={handleSubmit}>
               <div className="mb-3">
-                <label htmlFor="email" className="form-label">
+                <label htmlFor="email" className="form-label fw">
                   Your email
                 </label>
                 <input
@@ -29,8 +52,8 @@ const ModalContent = ({ email, setEmail, closeModal }) => {
                   type="email"
                   className="form-control"
                   placeholder="name@handyshop.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
                   required
                   pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 />
@@ -63,16 +86,11 @@ const ModalContent = ({ email, setEmail, closeModal }) => {
                   </label>
                 </div>
               </div>
-              <div className="d-flex justify-content-between align-items-center mb-3">
-                <a href="/Modal" className="text-white">
-                  Contraseña Perdida?
-                </a>
-              </div>
               <button
                 type="submit"
                 className="btn btn-primary btn-lg btn-block"
               >
-                Submit
+                Iniciar Sesión
               </button>
             </form>
           </div>

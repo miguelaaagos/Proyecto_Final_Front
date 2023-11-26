@@ -13,10 +13,7 @@ import { FaCartPlus } from "react-icons/fa";
 function NavBar() {
   const { carrito } = useContext(ShoesContext);
 
-  const total = carrito.reduce(
-    (valorAnterior, { count, precio }) => valorAnterior + precio * count,
-    0
-  );
+  const total = carrito.reduce((a, { precio, cantidad }) => a + precio * cantidad, 0);
   
 
   return (
@@ -38,13 +35,13 @@ function NavBar() {
             <NavLink to="/login" className="text-decoration-none">Iniciar Sesión</NavLink>
           </Col>
           <Col xs="auto">
-            <NavLink to="/carrito"><FaCartPlus className="text-decoration-none"/>({carrito.length})</NavLink>
+            <NavLink to="/carrito"><FaCartPlus className="text-decoration-none ml-5"/>({carrito.length})</NavLink>
           </Col>
         </Row>
       </Form>
-      <Link to="/carrito" className="logo-nombre mx-1 mb-0">
-        <h4 className="mb-0 text-decoration-none">💳 Total a Pagar:  ${formatNumber(total)} </h4>
-      </Link>
+      <div className="logo-nombre mx-1 mb-0 text-decoration-none">
+          <h4>💳 Total a Pagar: ${formatNumber(total)} </h4>
+      </div>
     </Navbar>
   );
 }

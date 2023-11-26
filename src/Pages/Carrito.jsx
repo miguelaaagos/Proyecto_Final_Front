@@ -1,11 +1,23 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ShoesContext } from '../Context';
 import { formatNumber } from '../Price';
+import Login from '../Pages/Login';
 
 const Carrito = () => {
-  const { carrito, increment, decrement } = useContext(ShoesContext);
+  const { carrito, increment, decrement, isLoggedIn } = useContext(ShoesContext);
+  const [showLogin, setShowLogin] = useState(false);
+  const [showFactura, setShowFactura] = useState(false);
+
   const total = carrito.reduce((a, { precio, cantidad }) => a + precio * cantidad, 0);
+
+  const handleIrAPagar = () => {
+    if (isLoggedIn) {
+      setShowFactura(true);
+    } else {
+      setShowLogin(true);
+    }
+  };
 
   return (
     <div className="carrito p-5">
@@ -18,7 +30,6 @@ const Carrito = () => {
                 <img src={producto.imagen} width="50" alt="" />
                 <h6 className="mb-0 text-capitalize p-2">{`${producto.marca} ${producto.modelo}`}</h6>
               </div>
-
               <div className="d-flex justify-content-end align-items-center">
                 <h6 className="mb-0 p-2 text-success">
                   ${formatNumber(producto.precio * producto.cantidad)}
@@ -40,9 +51,15 @@ const Carrito = () => {
             </div>
           ))}
           <h2 className="my-4">Total: ${formatNumber(total)}</h2>
-          <Link to="/" className="logo-nombre mx-1 mb-0">
-            <button className="btn btn-success">Ir a Pagar</button>
-          </Link>
+          {showLogin ? (
+            <Login />
+          ) : showFactura ? (
+            <Factura carrito={carrito} total={total} />
+          ) : (
+            <button className="btn btn-success" onClick={handleIrAPagar}>
+              Ir a Pagar
+            </button>
+          )}
         </div>
       </div>
     </div>
@@ -50,3 +67,4 @@ const Carrito = () => {
 };
 
 export default Carrito;
+

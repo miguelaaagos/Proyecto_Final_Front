@@ -4,15 +4,14 @@ import Swal from 'sweetalert2';
 
 
 const RegisterUsers = () => {
-
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
     Swal.fire({
-      title: 'Good job!',
-      text: 'You clicked the button!',
+      title: 'Gracias por registrarte!',
+      text: 'Revisa tu correo para confirmar tu cuenta',
       icon: 'success'
     });
     
@@ -22,7 +21,8 @@ const RegisterUsers = () => {
  
 
   return (
-    <form className="w-50 bg-light p-5 mb-4 mx-auto text-center">
+    <form className="w-50 bg-light p-5 mb-4 mx-auto text-center" onSubmit={handleSubmit}>
+      <h1 className="mb-4">Registro de Usuarios:</h1>
       <div className="mb-3">
         <label htmlFor="floating_email" className="form-label fs-5">
           E-mail
@@ -88,7 +88,7 @@ const RegisterUsers = () => {
         type="submit"
         className="btn btn-primary"
       >
-        Submit
+        Registrar
       </button>
     </form>
   );
