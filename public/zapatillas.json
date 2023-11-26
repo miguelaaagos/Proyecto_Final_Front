@@ -1,11 +1,13 @@
-[
+
+  [
     {
       "id": 1,
-      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWApcGOgAxfefgrlE3KIyeYNDMTecfsJ3x7g&usqp=CAU",
+      "imagen": "",
       "marca": "Nike",
       "modelo": "Air Max 90",
       "año": 2022,
-      "precio": 120.99
+      "precio": 120.000,
+      "descripcion": "Las zapatillas Nike Air Max 90 son conocidas por su estilo icónico y su comodidad excepcional. Este modelo en particular presenta un diseño moderno con detalles clásicos. La parte superior está confeccionada con materiales de alta calidad para garantizar durabilidad y resistencia. La tecnología Air Max en la suela proporciona una amortiguación superior, ofreciendo una sensación ligera y suave con cada paso. Perfectas para el uso diario, estas zapatillas Nike son ideales para aquellos que buscan un equilibrio entre estilo y funcionalidad."
     },
     {
       "id": 2,
@@ -13,7 +15,8 @@
       "marca": "Adidas",
       "modelo": "Ultra Boost",
       "año": 2021,
-      "precio": 129.99
+      "precio": 129.000,
+      "descripcion": "Las zapatillas Adidas Ultra Boost son reconocidas por su rendimiento y estilo excepcionales. Diseñadas para corredores y entusiastas del deporte, estas zapatillas ofrecen una combinación perfecta de amortiguación y soporte. La parte superior tejida se adapta a la forma del pie, brindando comodidad durante todo el día. La tecnología Boost en la suela proporciona una respuesta de energía, impulsando cada paso. Con un diseño elegante y moderno, las Adidas Ultra Boost son ideales tanto para el rendimiento atlético como para el uso diario."
     },
     {
       "id": 3,
@@ -21,7 +24,8 @@
       "marca": "Puma",
       "modelo": "Cali",
       "año": 2022,
-      "precio": 89.99
+      "precio": 89.000,
+      "descripcion": "Las zapatillas Puma Cali destacan por su estilo retro y moderno. Con una parte superior de cuero suave y perforaciones estratégicas, ofrecen una combinación única de comodidad y transpirabilidad. El diseño clásico de las Puma Cali se combina con detalles contemporáneos para un look fresco y versátil. Ya sea para pasear por la ciudad o para destacar en tus actividades diarias, estas zapatillas son una elección elegante y cómoda."
     },
     {
       "id": 4,
@@ -29,7 +33,8 @@
       "marca": "Reebok",
       "modelo": "Classic Leather",
       "año": 2020,
-      "precio": 79.99
+      "precio": 79.000,
+      "descripcion": "Las zapatillas Reebok Classic Leather son un ícono atemporal. Confeccionadas con cuero suave y duradero, ofrecen comodidad y estilo inigualables. Su diseño clásico se adapta a cualquier ocasión, desde un look casual hasta uno más elegante. La entresuela de EVA brinda una amortiguación ligera, mientras que la suela de caucho proporciona tracción y durabilidad. Ya sea que estés caminando por la ciudad o saliendo con amigos, las Reebok Classic Leather son una elección clásica y versátil."
     },
     {
       "id": 5,
@@ -37,7 +42,8 @@
       "marca": "Converse",
       "modelo": "Chuck Taylor All Star",
       "año": 2021,
-      "precio": 59.99
+      "precio": 74.000,
+      "descripcion": "Las zapatillas Converse Chuck Taylor All Star son un símbolo de estilo y autenticidad. Con su diseño atemporal y su parte superior de lona resistente, estas zapatillas son perfectas para cualquier ocasión. La suela de goma vulcanizada proporciona tracción y durabilidad, mientras que la plantilla acolchada brinda comodidad durante todo el día. Ya sea que estés en la calle o en un concierto, las Converse Chuck Taylor All Star son la opción clásica para expresar tu estilo único."
     },
     {
       "id": 6,
@@ -45,7 +51,8 @@
       "marca": "Vans",
       "modelo": "Old Skool",
       "año": 2022,
-      "precio": 69.99
+      "precio": 69.000,
+      "descripcion": "Las zapatillas Vans Old Skool son conocidas por su estilo skate clásico y su versatilidad. Con una parte superior de lona resistente y paneles laterales reforzados, ofrecen durabilidad y soporte. El cuello acolchado brinda comodidad adicional, mientras que la suela waffle de goma proporciona tracción superior. Desde la pista de skate hasta la calle, las Vans Old Skool son una elección icónica para aquellos que buscan un estilo relajado y auténtico."
     },
     {
       "id": 7,
@@ -53,7 +60,8 @@
       "marca": "New Balance",
       "modelo": "990v5",
       "año": 2020,
-      "precio": 174.99
+      "precio": 174.000,
+      "descripcion": "Las zapatillas New Balance 990v5 son un símbolo de rendimiento y estilo. Confeccionadas con materiales de alta calidad, incluido un empeine de piel de cerdo y malla transpirable, ofrecen comodidad y durabilidad superiores. La tecnología de amortiguación ENCAP y la entresuela de EVA brindan una absorción de impactos excepcional. Diseñadas para el uso diario, estas zapatillas New Balance son ideales para aquellos que buscan una combinación perfecta de moda y funcionalidad."
     },
     {
       "id": 8,
@@ -61,7 +69,8 @@
       "marca": "Asics",
       "modelo": "Gel-Kayano 27",
       "año": 2021,
-      "precio": 149.99
+      "precio": 149.000,
+      "descripcion": "Las zapatillas Asics Gel-Kayano 27 son reconocidas por su comodidad y rendimiento excepcionales. Diseñadas para corredores de larga distancia, ofrecen un soporte avanzado y una amortiguación superior. La tecnología GEL en el talón y el antepié absorbe el impacto, brindando una sensación suave y cómoda. El empeine de malla transpirable proporciona ventilación, manteniendo tus pies frescos durante toda la carrera. Ya sea que estés entrenando o simplemente disfrutando de un paseo, las Asics Gel-Kayano 27 son la elección perfecta para los amantes del running."
     },
     {
       "id": 9,
@@ -69,7 +78,8 @@
       "marca": "Under Armour",
       "modelo": "HOVR Phantom",
       "año": 2022,
-      "precio": 139.99
+      "precio": 139.000,
+      "descripcion": "Las zapatillas Under Armour HOVR Phantom combinan estilo y tecnología avanzada. Con una parte superior de punto y tecnología HOVR en la suela, brindan una sensación de ingravidez y un retorno de energía excepcionales. El diseño elegante se combina con un ajuste cómodo y transpirable. Perfectas para correr o para el uso diario, estas zapatillas Under Armour son una elección moderna para aquellos que buscan rendimiento y moda."
     },
     {
       "id": 10,
@@ -77,7 +87,8 @@
       "marca": "Saucony",
       "modelo": "Kinvara 12",
       "año": 2021,
-      "precio": 109.99
+      "precio": 109.000,
+      "descripcion": "Las zapatillas Saucony Kinvara 12 son conocidas por su ligereza y respuesta rápida. Diseñadas para corredores neutrales, ofrecen un equilibrio perfecto entre amortiguación y velocidad. La parte superior de malla transpirable proporciona ventilación, mientras que la entresuela PWRRUN ofrece una sensación de suavidad y reactividad. Con un diseño elegante y moderno, las Saucony Kinvara 12 son ideales para entrenamientos intensos y carreras rápidas."
     },
     {
       "id": 11,
@@ -85,7 +96,8 @@
       "marca": "Brooks",
       "modelo": "Ghost 14",
       "año": 2022,
-      "precio": 129.99
+      "precio": 129.000,
+      "descripcion": "Las zapatillas Brooks Ghost 14 son reconocidas por su comodidad y versatilidad. Con una parte superior de malla suave y una amortiguación equilibrada, ofrecen un ajuste cómodo y una sensación suave con cada paso. La tecnología Segmented Crash Pad proporciona una transición suave desde el talón hasta la punta. Ya sea que estés corriendo largas distancias o dando un paseo casual, las Brooks Ghost 14 son la elección perfecta para aquellos que buscan rendimiento y estilo."
     },
     {
       "id": 12,
@@ -93,71 +105,8 @@
       "marca": "Mizuno",
       "modelo": "Wave Rider 25",
       "año": 2021,
-      "precio": 119.99
-    },
-    {
-      "id": 13,
-      "imagen": "url_imagen_13.jpg",
-      "marca": "Salomon",
-      "modelo": "Speedcross 5",
-      "año": 2020,
-      "precio": 129.99
-    },
-    {
-      "id": 14,
-      "imagen": "url_imagen_14.jpg",
-      "marca": "Hoka One One",
-      "modelo": "Clifton 8",
-      "año": 2022,
-      "precio": 149.99
-    },
-    {
-      "id": 15,
-      "imagen": "url_imagen_15.jpg",
-      "marca": "Fila",
-      "modelo": "Disruptor II",
-      "año": 2021,
-      "precio": 79.99
-    },
-    {
-      "id": 16,
-      "imagen": "url_imagen_16.jpg",
-      "marca": "Lacoste",
-      "modelo": "Lerond",
-      "año": 2022,
-      "precio": 89.99
-    },
-    {
-      "id": 17,
-      "imagen": "url_imagen_17.jpg",
-      "marca": "DC Shoes",
-      "modelo": "Court Graffik",
-      "año": 2021,
-      "precio": 59.99
-    },
-    {
-      "id": 18,
-      "imagen": "url_imagen_18.jpg",
-      "marca": "Merrell",
-      "modelo": "Moab 2",
-      "año": 2020,
-      "precio": 99.99
-    },
-    {
-      "id": 19,
-      "imagen": "url_imagen_19.jpg",
-      "marca": "Etnies",
-      "modelo": "Jameson 2 Eco",
-      "año": 2022,
-      "precio": 69.99
-    },
-    {
-      "id": 20,
-      "imagen": "url_imagen_20.jpg",
-      "marca": "Timberland",
-      "modelo": "Killington",
-      "año": 2021,
-      "precio": 129.99
+      "precio": 119.000,
+      "descripcion": "Las zapatillas Mizuno Wave Rider 25 son conocidas por su combinación de amortiguación y velocidad. Con la tecnología Mizuno Enerzy en el talón y la entresuela Wave, ofrecen una sensación suave y elástica. La parte superior de malla transpirable brinda comodidad y ventilación, mientras que el ajuste cómodo se adapta a la forma del pie. Ya sea que estés corriendo o caminando, las Mizuno Wave Rider 25 te llevarán con estilo y rendimiento."
     }
   ]
 

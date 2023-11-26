@@ -6,7 +6,16 @@ const Card = () => {
   const { shoes, carrito, setCarrito } = useContext(ShoesContext);
 
   const addToCart = (zapatilla) => {
-    setCarrito([...carrito, zapatilla]);
+    const existingItem = carrito.find((item) => item.id === zapatilla.id);
+
+    if (existingItem) {
+      const updatedCarrito = carrito.map((item) =>
+        item.id === zapatilla.id ? { ...item, cantidad: item.cantidad + 1 } : item
+      );
+      setCarrito(updatedCarrito);
+    } else {
+      setCarrito([...carrito, { ...zapatilla, cantidad: 1 }]);
+    }
   };
 
   return (
@@ -36,5 +45,4 @@ const Card = () => {
 };
 
 export default Card;
-
 
