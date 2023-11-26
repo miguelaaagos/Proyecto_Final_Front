@@ -1,15 +1,21 @@
-// Card.js
 import React, { useContext } from "react";
-import { FaCartPlus } from "react-icons/fa";
-import { ShoesContext } from "../Context"; // Asegúrate de tener la ruta correcta
+import { Link } from "react-router-dom";
+import { ShoesContext } from "../Context";
 
 const Card = () => {
   const { shoes, carrito, setCarrito } = useContext(ShoesContext);
 
-  console.log("Datos de zapatillas en Card:", shoes);
-
   const addToCart = (zapatilla) => {
-    setCarrito([...carrito, zapatilla]);
+    const existingItem = carrito.find((item) => item.id === zapatilla.id);
+
+    if (existingItem) {
+      const updatedCarrito = carrito.map((item) =>
+        item.id === zapatilla.id ? { ...item, cantidad: item.cantidad + 1 } : item
+      );
+      setCarrito(updatedCarrito);
+    } else {
+      setCarrito([...carrito, { ...zapatilla, cantidad: 1 }]);
+    }
   };
 
   return (
@@ -28,7 +34,9 @@ const Card = () => {
             <button className="btn btn-dark" onClick={() => addToCart(zapatilla)}>
               Comprar
             </button>
-            <FaCartPlus style={{ marginLeft: "10px" }} />
+            <Link to={`/detalles/${zapatilla.id}`} className="btn btn-dark">
+              Detalles
+            </Link>
           </div>
         </div>
       ))}
