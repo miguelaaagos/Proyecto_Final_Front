@@ -9,9 +9,9 @@ const ShoesProvider = ({ children }) => {
   useEffect(() => {
     const getShoes = async () => {
       try {
-        const res = await fetch('/zapatillas.json');
+        const res = await fetch('http://127.0.0.1:5000/publicacion');
         const shoesData = await res.json();
-        setShoes(shoesData);
+        setShoes(shoesData.publicaciones);
       } catch (error) {
         console.error('Error fetching shoes:', error);
       }

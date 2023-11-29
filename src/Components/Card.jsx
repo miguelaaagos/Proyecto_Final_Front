@@ -4,6 +4,7 @@ import { ShoesContext } from "../Context";
 
 const Card = () => {
   const { shoes, carrito, setCarrito } = useContext(ShoesContext);
+  console.log("Shoes:", shoes);
 
   const addToCart = (zapatilla) => {
     const existingItem = carrito.find((item) => item.id === zapatilla.id);
