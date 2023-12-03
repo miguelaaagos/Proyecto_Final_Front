@@ -1,13 +1,13 @@
 import React, { useContext, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { ShoesContext } from '../Context';
 import { formatNumber } from '../Price';
-import Login from '../Pages/Login';
+import { NavLink } from 'react-router-dom';
+
 
 const Carrito = () => {
   const { carrito, increment, decrement, isLoggedIn } = useContext(ShoesContext);
   const [showLogin, setShowLogin] = useState(false);
-  const [showFactura, setShowFactura] = useState(false);
+
 
   const total = carrito.reduce((a, { precio, cantidad }) => a + precio * cantidad, 0);
 
@@ -51,15 +51,16 @@ const Carrito = () => {
             </div>
           ))}
           <h2 className="my-4">Total: ${formatNumber(total)}</h2>
-          {showLogin ? (
-            <Login />
-          ) : showFactura ? (
-            <Factura carrito={carrito} total={total} />
-          ) : (
-            <button className="btn btn-success" onClick={handleIrAPagar}>
-              Ir a Pagar
+          <NavLink to="/" className="text-decoration-none">
+            <button className="btn btn-success mx-5">
+              Comprar
             </button>
-          )}
+          </NavLink>
+          <NavLink to="/" className="text-decoration-none">
+            <button className="btn btn-primary mx-5">
+              Seguir Comprando
+            </button>
+          </NavLink>
         </div>
       </div>
     </div>
@@ -67,4 +68,5 @@ const Carrito = () => {
 };
 
 export default Carrito;
+
 
