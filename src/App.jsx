@@ -8,6 +8,7 @@ import DetailsCart from "./Pages/DetailsCart";
 import DetailsProduct from "./Pages/DetailsProduct";
 import Footer from "./Components/Footer";
 import Carrito from "./Pages/Carrito";
+import RegisterProduct from "./Pages/RegisterProduct";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/detailscart" element={<DetailsCart />} />
           <Route path="/detalles/:id" element={<DetailsProduct />} />
           <Route path="/carrito" element={<Carrito />} />
+          <Route path="/registerproduct" element={<RegisterProduct />} />
         </Routes>
       </ShoesProvider>
       <Footer />

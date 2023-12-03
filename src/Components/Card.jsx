@@ -1,10 +1,28 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ShoesContext } from "../Context";
 
 const Card = () => {
-  const { shoes, carrito, setCarrito } = useContext(ShoesContext);
-  console.log("Shoes:", shoes);
+  const { carrito, setCarrito } = useContext(ShoesContext);
+  const [shoes, setShoes] = useState([]);
+
+  useEffect(() => {
+    const fetchShoes = async () => {
+      try {
+        const response = await fetch('http://127.0.0.1:5000/publicacion');
+        if (response.ok) {
+          const data = await response.json();
+          setShoes(data);
+        } else {
+          console.error('Error al obtener datos de zapatillas');
+        }
+      } catch (error) {
+        console.error('Error de red:', error);
+      }
+    };
+
+    fetchShoes();
+  }, []);
 
   const addToCart = (zapatilla) => {
     const existingItem = carrito.find((item) => item.id === zapatilla.id);
@@ -29,9 +47,10 @@ const Card = () => {
             alt={`Zapatillas ${zapatilla.modelo}`}
           />
           <div className="card-body">
-            <h5 className="card-title">{`${zapatilla.marca} ${zapatilla.modelo}`}</h5>
+            <h5 className="card-title">{`${zapatilla.marca}`}</h5>
+            <p className="card-text">{`Modelo: ${zapatilla.modelo}`}</p>
             <p className="card-text">{`Año: ${zapatilla.año}`}</p>
-            <p className="card-text">{`Precio: $${zapatilla.precio.toFixed(2)}`}</p>
+            <p className="card-text">{`Precio: $${zapatilla.precio}`}</p>
             <button className="btn btn-dark" onClick={() => addToCart(zapatilla)}>
               Comprar
             </button>
