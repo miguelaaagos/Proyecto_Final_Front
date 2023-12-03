@@ -2,36 +2,58 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 
-const ModalContent = ({ setEmail, closeModal }) => {
+const ModalContent = ({ setLoggedInUser, closeModal }) => {
   const [emailInput, setEmailInput] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const predefinedEmail = 'test@example.com';
-    const predefinedPassword = '123456';
-
-    if (emailInput === predefinedEmail && password === predefinedPassword) {
-      if (rememberMe) {
-        localStorage.setItem('rememberMe', emailInput);
-      } else {
-        localStorage.removeItem('rememberMe');
-      }
-      Swal.fire({
-        title: "Bienvenido!",
-        text: "Usuario logueado correctamente.",
-        icon: "success"
+  const handleLogin = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:5000/usuario/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: emailInput,
+          password: password,
+        }),
       });
-      navigate('/');
-    } else {
+
+      if (response.ok) {
+        const responseData = await response.json();
+        setLoggedInUser(responseData.email);
+
+        if (rememberMe) {
+          localStorage.setItem('rememberMe', emailInput);
+        } else {
+          localStorage.removeItem('rememberMe');
+        }
+
+        closeModal(); 
+        navigate('/');  
+      } else if (response.status === 401) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops... Correo o contraseña incorrectos.',
+          text: 'Por favor, verifica tus credenciales e inténtalo nuevamente.',
+          footer: '<a href="#">No recuerdas las credenciales</a>',
+        });
+      } else {
+        const errorData = await response.json();
+        Swal.fire({
+          icon: 'error',
+          title: 'Error al iniciar sesión',
+          text: errorData.error || 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.',
+        });
+      }
+    } catch (error) {
+      console.error('Error:', error);
       Swal.fire({
-        icon: "error",
-        title: "Oops... Correo o contraseña incorrectos.",
-        text: "Por favor, intente nuevamente.",
-        footer: '<a href="#">No recuerdas las credenciales</a>'
+        title: 'Error al iniciar sesión',
+        text: 'Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.',
+        icon: 'error',
       });
     }
   };
@@ -42,7 +64,7 @@ const ModalContent = ({ setEmail, closeModal }) => {
         <div className="modal-content bg-light text-dark p-5 rounded-lg cursor-pointer">
           <div className="modal-body">
             <h3 className="text-2xl m-5 fw font-medium">Iniciar Sesión</h3>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
               <div className="mb-3">
                 <label htmlFor="email" className="form-label fw">
                   Your email
@@ -101,3 +123,4 @@ const ModalContent = ({ setEmail, closeModal }) => {
 };
 
 export default ModalContent;
+

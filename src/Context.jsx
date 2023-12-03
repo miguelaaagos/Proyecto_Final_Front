@@ -9,9 +9,9 @@ const ShoesProvider = ({ children }) => {
   useEffect(() => {
     const getShoes = async () => {
       try {
-        const res = await fetch('/zapatillas.json');
+        const res = await fetch('http://localhost:5000/publicacion');
         const shoesData = await res.json();
-        setShoes(shoesData);
+        setShoes(shoesData.publicaciones);
       } catch (error) {
         console.error('Error fetching shoes:', error);
       }
@@ -57,9 +57,32 @@ const ShoesProvider = ({ children }) => {
     });
   };
 
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <ShoesContext.Provider
-      value={{ shoes, carrito, setCarrito, addToCart, increment, decrement }}
+      value={{
+        shoes,
+        carrito,
+        setCarrito,
+        addToCart,
+        increment,
+        decrement,
+        loggedInUser,
+        setLoggedInUser,
+        isModalOpen,
+        openModal,
+        closeModal,
+      }}
     >
       {children}
     </ShoesContext.Provider>
@@ -67,3 +90,4 @@ const ShoesProvider = ({ children }) => {
 };
 
 export { ShoesProvider, ShoesContext };
+
