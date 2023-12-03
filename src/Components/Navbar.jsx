@@ -9,7 +9,6 @@ import { NavLink } from 'react-router-dom';
 import { ShoesContext } from '../Context';
 import { formatNumber } from '../Price';
 import { FaCartPlus } from "react-icons/fa";
-import ModalContent from '../Pages/Login';
 
 function NavBar() {
   const { carrito } = useContext(ShoesContext);
@@ -19,16 +18,22 @@ function NavBar() {
   const total = carrito.reduce((a, { precio, cantidad }) => a + precio * cantidad, 0);
 
   const openModal = () => {
+    console.log('Opening modal');
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
+    console.log('Closing modal');
     setIsModalOpen(false);
   };
 
   const handleLogin = (email) => {
     setLoggedInUser(email);
     closeModal();
+  };
+
+  const handleLogout = () => {
+    setLoggedInUser(null);
   };
 
   return (
@@ -44,18 +49,26 @@ function NavBar() {
                 <BiSearch style={{ textDecoration: 'none' }} />
               </Button>
             </Col>
-            <Col xs="auto">
-              <NavLink to="/register" className="text-decoration-none">Registrarse</NavLink>
-            </Col>
-            <Col xs="auto">
-              <Button onClick={openModal} className="text-decoration-none">Iniciar Sesión</Button>
-              {isModalOpen && (
-                <ModalContent
-                  setLoggedInUser={handleLogin}
-                  closeModal={closeModal}
-                />
-              )}
-            </Col>
+            {loggedInUser && (// Si no está logueado, muestra los botones de Registrarse e Iniciar Sesión
+              <>
+                <Col xs="auto">
+                  <NavLink to="/register" className="text-decoration-none">Registrarse</NavLink>
+                </Col>
+                <Col xs="auto">
+                  <NavLink to="/loginusers" className="text-decoration-none">Iniciar Sesión</NavLink>
+                </Col>
+              </>
+            )}
+            {!loggedInUser && (// Si está logueado, muestra el nombre del usuario y el botón de Cerrar Sesión
+              <>
+                <Col xs="auto">
+                  <span>Hola, {loggedInUser}</span>
+                </Col>
+                <Col xs="auto">
+                  <Button variant="link" className='text-decoration-none' onClick={handleLogout}>Cerrar Sesión</Button>
+                </Col>
+              </>
+            )}
             <Col xs="auto">
               <NavLink to="/carrito"><FaCartPlus className="text-decoration-none ml-5"/>({carrito.length})</NavLink>
             </Col>
@@ -70,6 +83,7 @@ function NavBar() {
 }
 
 export default NavBar;
+
 
 
 

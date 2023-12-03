@@ -3,21 +3,23 @@ import React, { createContext, useState, useEffect } from 'react';
 const ShoesContext = createContext();
 
 const ShoesProvider = ({ children }) => {
-  const [shoes, setShoes] = useState([]);
+  const [zapatillas, setZapatillas] = useState([]);  // Cambiado el nombre de 'shoes' a 'zapatillas'
   const [carrito, setCarrito] = useState([]);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
-    const getShoes = async () => {
+    const getZapatillas = async () => {
       try {
         const res = await fetch('http://localhost:5000/publicacion');
-        const shoesData = await res.json();
-        setShoes(shoesData.publicaciones);
+        const zapatillasData = await res.json();
+        setZapatillas(zapatillasData.publicaciones);
       } catch (error) {
-        console.error('Error fetching shoes:', error);
+        console.error('Error fetching zapatillas:', error);
       }
     };
 
-    getShoes();
+    getZapatillas();
   }, []);
 
   const addToCart = ({ id, price, name, img }) => {
@@ -57,9 +59,6 @@ const ShoesProvider = ({ children }) => {
     });
   };
 
-  const [loggedInUser, setLoggedInUser] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -71,7 +70,7 @@ const ShoesProvider = ({ children }) => {
   return (
     <ShoesContext.Provider
       value={{
-        shoes,
+        zapatillas,
         carrito,
         setCarrito,
         addToCart,
@@ -90,4 +89,6 @@ const ShoesProvider = ({ children }) => {
 };
 
 export { ShoesProvider, ShoesContext };
+
+
 
