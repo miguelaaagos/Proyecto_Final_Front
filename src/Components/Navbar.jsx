@@ -1,39 +1,63 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { BiSearch } from 'react-icons/bi';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { ShoesContext } from '../Context';
 import { formatNumber } from '../Price';
-import { FaCartPlus } from "react-icons/fa";
+import { FaCartPlus } from 'react-icons/fa';
 
 function NavBar() {
-  const { carrito } = useContext(ShoesContext);
-  const [loggedInUser, setLoggedInUser] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { carrito, loggedInUser, handleLogout } = useContext(ShoesContext);
+  const navigate = useNavigate();
 
-  const total = carrito.reduce((a, { precio, cantidad }) => a + precio * cantidad, 0);
+  useEffect(() => {
+    if (loggedInUser) {
+      console.log('Usuario autenticado:', loggedInUser);
+    } else {
+      console.log('No hay usuario autenticado');
+    }
+  }, [loggedInUser]);
 
-  const openModal = () => {
-    console.log('Opening modal');
-    setIsModalOpen(true);
+  const handleProfileClick = () => {
+    navigate('/perfil');
   };
 
-  const closeModal = () => {
-    console.log('Closing modal');
-    setIsModalOpen(false);
-  };
-
-  const handleLogin = (email) => {
-    setLoggedInUser(email);
-    closeModal();
-  };
-
-  const handleLogout = () => {
-    setLoggedInUser(null);
+  const renderAuthLinks = () => {
+    if (loggedInUser) {
+      return (
+        <>
+          <Col xs="auto">
+            <span onClick={handleProfileClick} style={{ cursor: 'pointer' }}>
+              Hola, {loggedInUser.name}
+            </span>
+          </Col>
+          <Col xs="auto">
+            <Button variant="link" className="text-decoration-none" onClick={handleLogout}>
+              Cerrar Sesión
+            </Button>
+          </Col>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <Col xs="auto">
+            <NavLink to="/register" className="text-decoration-none">
+              Registrarse
+            </NavLink>
+          </Col>
+          <Col xs="auto">
+            <NavLink to="/loginusers" className="text-decoration-none">
+              Iniciar Sesión
+            </NavLink>
+          </Col>
+        </>
+      );
+    }
   };
 
   return (
@@ -49,33 +73,16 @@ function NavBar() {
                 <BiSearch style={{ textDecoration: 'none' }} />
               </Button>
             </Col>
-            {loggedInUser && (// Si no está logueado, muestra los botones de Registrarse e Iniciar Sesión
-              <>
-                <Col xs="auto">
-                  <NavLink to="/register" className="text-decoration-none">Registrarse</NavLink>
-                </Col>
-                <Col xs="auto">
-                  <NavLink to="/loginusers" className="text-decoration-none">Iniciar Sesión</NavLink>
-                </Col>
-              </>
-            )}
-            {!loggedInUser && (// Si está logueado, muestra el nombre del usuario y el botón de Cerrar Sesión
-              <>
-                <Col xs="auto">
-                  <span>Hola, {loggedInUser}</span>
-                </Col>
-                <Col xs="auto">
-                  <Button variant="link" className='text-decoration-none' onClick={handleLogout}>Cerrar Sesión</Button>
-                </Col>
-              </>
-            )}
+            {renderAuthLinks()}
             <Col xs="auto">
-              <NavLink to="/carrito"><FaCartPlus className="text-decoration-none ml-5"/>({carrito.length})</NavLink>
+              <NavLink to="/carrito">
+                <FaCartPlus className="text-decoration-none ml-5" /> ({carrito.length})
+              </NavLink>
             </Col>
           </Row>
         </Form>
         <div className="logo-nombre mx-1 mb-0 text-decoration-none">
-          <h4>💳 Total a Pagar: ${formatNumber(total)} </h4>
+          <h4>💳 Total a Pagar: ${formatNumber(0)} </h4>
         </div>
       </Navbar>
     </>
@@ -83,6 +90,8 @@ function NavBar() {
 }
 
 export default NavBar;
+
+
 
 
 

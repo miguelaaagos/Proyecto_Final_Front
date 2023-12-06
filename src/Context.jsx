@@ -3,10 +3,11 @@ import React, { createContext, useState, useEffect } from 'react';
 const ShoesContext = createContext();
 
 const ShoesProvider = ({ children }) => {
-  const [zapatillas, setZapatillas] = useState([]);  // Cambiado el nombre de 'shoes' a 'zapatillas'
+  const [zapatillas, setZapatillas] = useState([]);
   const [carrito, setCarrito] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getZapatillas = async () => {
@@ -22,73 +23,49 @@ const ShoesProvider = ({ children }) => {
     getZapatillas();
   }, []);
 
-  const addToCart = ({ id, price, name, img }) => {
-    setCarrito((prevCarrito) => {
-      const productoEcontradoIndex = prevCarrito.findIndex((p) => p.id === id);
+  const login = async (email, password) => {
+    try {
+      setLoading(true);
 
-      if (productoEcontradoIndex >= 0) {
-        return prevCarrito.map((producto, index) =>
-          index === productoEcontradoIndex
-            ? { ...producto, count: producto.count + 1 }
-            : producto
-        );
+      const response = await fetch('http://localhost:5000/usuario/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        }),
+      });
+
+      const responseData = await response.json();
+
+      if (response.ok) {
+        setLoggedInUser(responseData.user); // Asegúrate de que la respuesta contenga la información del usuario
+        setIsModalOpen(false);
       } else {
-        return [...prevCarrito, { id, price, name, img, count: 1 }];
+        console.error('Error al iniciar sesión:', responseData.message);
       }
-    });
+    } catch (error) {
+      console.error('Error al procesar la solicitud:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const increment = (i) => {
-    setCarrito((prevCarrito) =>
-      prevCarrito.map((producto, index) =>
-        index === i ? { ...producto, count: producto.count + 1 } : producto
-      )
-    );
+  const contextValue = {
+    zapatillas,
+    carrito,
+    setCarrito,
+    login,
+    loggedInUser,
+    isModalOpen,
+    setIsModalOpen,
   };
 
-  const decrement = (i) => {
-    setCarrito((prevCarrito) => {
-      const { count } = prevCarrito[i];
-      if (count === 1) {
-        return prevCarrito.filter((_, index) => index !== i);
-      } else {
-        return prevCarrito.map((producto, index) =>
-          index === i ? { ...producto, count: producto.count - 1 } : producto
-        );
-      }
-    });
-  };
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
-  return (
-    <ShoesContext.Provider
-      value={{
-        zapatillas,
-        carrito,
-        setCarrito,
-        addToCart,
-        increment,
-        decrement,
-        loggedInUser,
-        setLoggedInUser,
-        isModalOpen,
-        openModal,
-        closeModal,
-      }}
-    >
-      {children}
-    </ShoesContext.Provider>
-  );
+  return <ShoesContext.Provider value={contextValue}>{children}</ShoesContext.Provider>;
 };
 
 export { ShoesProvider, ShoesContext };
-
 
 
