@@ -1,63 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { ShoesContext } from '../Context';
 import Swal from 'sweetalert2';
 
 const Login = () => {
+  const { login, loading, loggedInUser } = useContext(ShoesContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loggedInUser) {
+      // Si ya hay un usuario autenticado, redirige a la página principal
+      navigate('/');
+    }
+  }, [loggedInUser, navigate]);
 
   const handleLogin = async () => {
     try {
-      setLoading(true);
-
-      const response = await fetch('http://127.0.0.1:5000/usuario/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: email,
-          password: password,
-        }),
-      });
-
-      const responseData = await response.json();
-
-      if (response.ok) {
-        Swal.fire({
-          icon: 'success',
-          title: 'Inicio de sesión exitoso',
-          text: 'Redireccionando a la página principal...',
-          showConfirmButton: false,
-          timer: 2000,
-        });
-
-        setTimeout(() => {
-          navigate('/');
-        }, 3000);
-      } else {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error de inicio de sesión',
-          text: responseData.message || 'Email o Contraseña Incorrectos',
-        });
-      }
+      await login(email, password);
     } catch (error) {
-      console.error('Error al procesar la solicitud:', error);
-    } finally {
-      setLoading(false);
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Error al iniciar sesión',
+      });
     }
-  };
-
-  const handleForgotPassword = () => {
-    console.log('¿Olvidaste tu contraseña?');
-  };
-
-  const handleRegister = () => {
-    console.log('Registro');
   };
 
   return (
@@ -69,7 +38,9 @@ const Login = () => {
               <h5 className="card-title text-center">Inicio de Sesión</h5>
               <form>
                 <div className="mb-3">
-                  <label htmlFor="email" className="form-label">Correo Electrónico</label>
+                  <label htmlFor="email" className="form-label">
+                    Correo Electrónico
+                  </label>
                   <input
                     type="email"
                     className="form-control"
@@ -80,7 +51,9 @@ const Login = () => {
                   />
                 </div>
                 <div className="mb-3">
-                  <label htmlFor="password" className="form-label">Contraseña</label>
+                  <label htmlFor="password" className="form-label">
+                    Contraseña
+                  </label>
                   <input
                     type="password"
                     className="form-control"
@@ -98,7 +71,9 @@ const Login = () => {
                     checked={rememberMe}
                     onChange={() => setRememberMe(!rememberMe)}
                   />
-                  <label className="form-check-label" htmlFor="rememberMe">Recuérdame</label>
+                  <label className="form-check-label" htmlFor="rememberMe">
+                    Recuérdame
+                  </label>
                 </div>
                 <button
                   type="button"
@@ -109,14 +84,14 @@ const Login = () => {
                   {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
                 </button>
                 <div className="mt-3">
-                <p className="text-center">
+                  <p className="text-center">
                     <NavLink to="/forgottenpassword" className="text-decoration-none">
-                       <a href="#" className='text-decoration-none'>Olvidastes la Contraseña</a>
+                      Olvidaste la Contraseña
                     </NavLink>
                   </p>
                   <p className="text-center">
                     <NavLink to="/register" className="text-decoration-none">
-                      ¿No tienes una cuenta? <a href="#" className='text-decoration-none' onClick={handleRegister}>Regístrate</a>
+                      ¿No tienes una cuenta? Regístrate
                     </NavLink>
                   </p>
                 </div>
@@ -130,4 +105,8 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
 

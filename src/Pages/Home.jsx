@@ -6,7 +6,7 @@ import Card from '../Components/Card';
 function Home() {
   return (
     <div>
-      <Navbar />
+       <Navbar /> 
       <Carrucel />
       <Card />
     </div>

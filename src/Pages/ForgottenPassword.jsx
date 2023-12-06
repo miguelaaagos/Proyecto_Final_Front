@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleForgotPassword = async () => {
     try {
@@ -23,7 +25,13 @@ const ForgotPassword = () => {
           icon: 'success',
           title: 'Correo enviado',
           text: 'Se ha enviado un correo de recuperación de contraseña. Por favor, verifica tu bandeja de entrada.',
+          timer: 2000,
         });
+
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+
       } else {
         const responseData = await response.json();
         Swal.fire({
