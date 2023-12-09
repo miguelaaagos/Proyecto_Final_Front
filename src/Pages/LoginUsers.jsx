@@ -1,19 +1,20 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { ShoesContext } from '../Context';
-import Swal from 'sweetalert2';
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { ShoesContext } from "../Context";
+import Swal from "sweetalert2";
+import Navbar from "../Components/Navbar";
 
 const Login = () => {
   const { login, loading, loggedInUser } = useContext(ShoesContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (loggedInUser) {
       // Si ya hay un usuario autenticado, redirige a la página principal
-      navigate('/');
+      navigate("/");
     }
   }, [loggedInUser, navigate]);
 
@@ -22,20 +23,21 @@ const Login = () => {
       await login(email, password);
     } catch (error) {
       Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Error al iniciar sesión',
+        icon: "error",
+        title: "Error",
+        text: "Error al iniciar sesión",
       });
     }
   };
 
   return (
-    <div className="container mt-5">
+    <div className="container1">
+      <Navbar /> 
       <div className="row justify-content-center">
-        <div className="col-md-6">
-          <div className="card">
+        <div className="col-md-4">
+          <div className="card" id="form">
             <div className="card-body">
-              <h5 className="card-title text-center">Inicio de Sesión</h5>
+              <h4 className="card-title text-center">Inicio de Sesión</h4>
               <form>
                 <div className="mb-3">
                   <label htmlFor="email" className="form-label">
@@ -75,17 +77,22 @@ const Login = () => {
                     Recuérdame
                   </label>
                 </div>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-lg btn-block"
-                  onClick={handleLogin}
-                  disabled={loading}
-                >
-                  {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-                </button>
+                <div className="d-flex justify-content-center align-items-center">
+                  <button
+                    type="button"
+                    className="btn btn-primary btn-md btn-block"
+                    onClick={handleLogin}
+                    disabled={loading}
+                  >
+                    {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                  </button>
+                </div>
                 <div className="mt-3">
                   <p className="text-center">
-                    <NavLink to="/forgottenpassword" className="text-decoration-none">
+                    <NavLink
+                      to="/forgottenpassword"
+                      className="text-decoration-none"
+                    >
                       Olvidaste la Contraseña
                     </NavLink>
                   </p>
@@ -105,8 +112,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
-

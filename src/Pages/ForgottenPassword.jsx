@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Components/Navbar';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -48,11 +49,12 @@ const ForgotPassword = () => {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6">
+    <div className="container1">
+      <Navbar /> 
+      <div className="row justify-content-center mt-5">
+        <div className="col-md-6 w-25">
           <div className="card">
-            <div className="card-body">
+            <div className="card-body text-center">
               <h5 className="card-title text-center">Recuperar Contraseña</h5>
               <form>
                 <div className="mb-3">
@@ -68,11 +70,11 @@ const ForgotPassword = () => {
                 </div>
                 <button
                   type="button"
-                  className="btn btn-primary btn-lg btn-block"
+                  className="btn btn-primary btn-md btn-block"
                   onClick={handleForgotPassword}
                   disabled={loading}
                 >
-                  {loading ? 'Enviando correo...' : 'Enviar Correo de Recuperación'}
+                  {loading ? 'Enviando correo...' : 'Enviar Correo'}
                 </button>
               </form>
             </div>

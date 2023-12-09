@@ -14,6 +14,7 @@ import Navbar from "./Components/Navbar";
 import NotFound from "./Pages/NotFound";
 import DetailsUsers from "./Pages/DetailsUsers";
 import Successful from "./Pages/Successful";
+import './index.css';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
