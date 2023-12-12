@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { useNavigate } from 'react-router-dom';
-import Navbar from '../Components/Navbar';
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState('');
@@ -50,7 +49,6 @@ const ForgotPassword = () => {
 
   return (
     <div className="container1">
-      <Navbar /> 
       <div className="row justify-content-center mt-5">
         <div className="col-md-6 w-25">
           <div className="card">

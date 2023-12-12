@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import Navbar from "../Components/Navbar";
 
 const RegisterUsers = () => {
   const navigate = useNavigate();
@@ -19,9 +18,8 @@ const RegisterUsers = () => {
     e.preventDefault();
 
     try {
-
-      const response = await fetch('http://127.0.0.1:8080/crear-usuario', {
-        method: 'POST',
+      const response = await fetch("http://127.0.0.1:5000/usuario", {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
@@ -34,7 +32,7 @@ const RegisterUsers = () => {
 
       if (response.ok) {
         Swal.fire({
-          title: "Gracias por registrarte!",
+          title: "¡Gracias por registrarte!",
           text: "Revisa tu correo para confirmar tu cuenta",
           icon: "success",
         });
@@ -59,16 +57,12 @@ const RegisterUsers = () => {
 
   return (
     <div className="container1">
-      <Navbar />
-      <form
-        className="w-50 bg-light mb-4 mx-auto text-center"
-        onSubmit={handleSubmit}
-      >
+      <form className="w-50 bg-light mb-4 mx-auto text-center" onSubmit={handleSubmit}>
         <div className="card" id="form">
           <div className="card-body">
             <h4 className="mb-4 card-title text-center">Registro de Usuarios</h4>
             <div className="mb-3">
-              <label htmlFor="floating_email" className="form-label fs-5">
+              <label htmlFor="email" className="form-label fs-5">
                 E-mail
               </label>
               <input
@@ -82,7 +76,7 @@ const RegisterUsers = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="floating_password" className="form-label fs-5">
+              <label htmlFor="password" className="form-label fs-5">
                 Contraseña
               </label>
               <input
@@ -96,14 +90,14 @@ const RegisterUsers = () => {
               />
             </div>
             <div className="mb-3">
-              <label htmlFor="floating_first_name" className="form-label fs-5">
+              <label htmlFor="username" className="form-label fs-5">
                 Ingrese su Nombre de Usuario
               </label>
               <input
                 type="text"
                 className="form-control"
                 id="username"
-                placeholder="First Name"
+                placeholder="Nombre de Usuario"
                 value={formData.username}
                 onChange={handleChange}
                 required

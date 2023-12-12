@@ -19,8 +19,8 @@ const Carrito = () => {
   };
 
   return (
-    <div className="carrito p-5">
-      <div className="detalles bg-light w-75 m-auto p-5">
+    <div className="container1"> 
+      <div className="card detalles w-50 m-auto mt-5 p-5">
         <h5>Detalles del pedido:</h5>
         <div className="p-3 bg-white">
         {carrito.map((producto) => (
@@ -51,7 +51,7 @@ const Carrito = () => {
 ))}
           <h2 className="my-4">Total: ${formatNumber(total)}</h2>
           <NavLink to="/successful" className="text-decoration-none">
-            <button className="btn btn-success mx-5">
+            <button className="btn btn-success">
               Finalizar Comprar
             </button>
           </NavLink>

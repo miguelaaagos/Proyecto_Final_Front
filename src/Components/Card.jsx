@@ -33,17 +33,14 @@ const Card = () => {
       const existingItem = carrito.find((item) => item.id === zapatilla.id);
 
       if (existingItem) {
-        // Si el artículo ya está en el carrito, actualizar la cantidad
-        addToCart({
-          ...zapatilla,
-          cantidad: existingItem.cantidad + 1,
-        });
+        const updatedCarrito = carrito.map((item) =>
+          item.id === zapatilla.id
+            ? { ...item, cantidad: item.cantidad + 1 }
+            : item
+        );
+        addToCart(updatedCarrito);
       } else {
-        // Si el artículo no está en el carrito, agregarlo
-        addToCart({
-          ...zapatilla,
-          cantidad: 1,
-        });
+        addToCart([...carrito, { ...zapatilla, cantidad: 1 }]);
       }
     } else {
       console.log('Usuario no autenticado. Redirigir a la página de inicio de sesión.');

@@ -1,12 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ShoesContext } from '../Context';
-import Swal from 'sweetalert2';
-import Navbar from '../Components/Navbar';
 import { Form, Button, Alert } from 'react-bootstrap';
 
 const Login = () => {
-  const { login, loading, loggedInUser } = useContext(ShoesContext);
+  const { handleLogin, loading, loggedInUser } = useContext(ShoesContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
@@ -16,7 +14,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedInUser) {
+    if (loggedInUser && Object.keys(loggedInUser).length > 0) {
       navigate('/');
     }
   }, [loggedInUser, navigate]);
@@ -27,7 +25,7 @@ const Login = () => {
     setUserNotRegistered(false);
 
     try {
-      await login(email, password);
+      await handleLogin(email, password);
 
       if (!loggedInUser || Object.keys(loggedInUser).length === 0) {
         setUserNotRegistered(true);
@@ -38,17 +36,12 @@ const Login = () => {
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       setLocalError(error.message || 'Error al iniciar sesión.');
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Error al iniciar sesión',
-      });
     }
   };
 
   const handleCloseForm = () => {
     setFormClosed(true);
-    navigate('/');
+    navigate('/'); 
   };
 
   if (formClosed) {
@@ -56,13 +49,20 @@ const Login = () => {
   }
 
   return (
-    <div className="container1">
-      <Navbar />
+    <div className="container mt-5">
       <div className="row justify-content-center">
-        <div className="col-md-4">
-          <div className="card" id="form">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-header d-flex justify-content-end">
+              <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseForm}></button>
+            </div>
             <div className="card-body">
-              <h4 className="card-title text-center">Inicio de Sesión</h4>
+              <h5 className="card-title text-center">Inicio de Sesión</h5>
+              {userNotRegistered && (
+                <Alert variant="danger" className="mt-3">
+                  Usuario no registrado. Verifica tu correo y contraseña.
+                </Alert>
+              )}
               <Form onSubmit={handleLoginSubmit}>
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label>Correo Electrónico</Form.Label>
@@ -103,32 +103,19 @@ const Login = () => {
                     {localError}
                   </Alert>
                 )}
+                <div className="mt-3">
+                  <p className="text-center">
+                    <NavLink to="/forgottenpassword" className="text-decoration-none">
+                      Olvidaste la Contraseña
+                    </NavLink>
+                  </p>
+                  <p className="text-center">
+                    <NavLink to="/register" className="text-decoration-none">
+                      ¿No tienes una cuenta? Regístrate
+                    </NavLink>
+                  </p>
+                </div>
               </Form>
-              <div className="d-flex justify-content-center align-items-center">
-                <button
-                  type="button"
-                  className="btn btn-primary btn-md btn-block"
-                  onClick={handleCloseForm}
-                  disabled={loading}
-                >
-                  Cerrar Formulario
-                </button>
-              </div>
-              <div className="mt-3">
-                <p className="text-center">
-                  <NavLink
-                    to="/forgottenpassword"
-                    className="text-decoration-none"
-                  >
-                    Olvidaste la Contraseña
-                  </NavLink>
-                </p>
-                <p className="text-center">
-                  <NavLink to="/register" className="text-decoration-none">
-                    ¿No tienes una cuenta? Regístrate
-                  </NavLink>
-                </p>
-              </div>
             </div>
           </div>
         </div>
@@ -138,4 +125,3 @@ const Login = () => {
 };
 
 export default Login;
-

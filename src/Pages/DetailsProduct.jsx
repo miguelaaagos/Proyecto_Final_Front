@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ShoesContext } from "../Context";
-import Navbar from "../Components/Navbar";
 
 const CardDetalles = () => {
   const { id } = useParams();
@@ -36,36 +35,37 @@ const CardDetalles = () => {
   }
 
   return (
-    <div className="card m-3 p-3 mx-auto" style={{ maxWidth: "500px" }}>
-      <div className="img-container">
-        <img
-          src={zapatilla.imagen}
-          className="card-img-top"
-          alt={`Zapatillas ${zapatilla.modelo}`}
-          style={{ width: "250px", height: "auto" }}
-        />
-      </div>
-      <div className="card-detalles ms-3">
-        <div className="card-body">
-          <h5 className="card-title">{`${zapatilla.marca} ${zapatilla.modelo}`}</h5>
-          <p className="card-text">{`Descripción: ${zapatilla.descripcion}`}</p>
+    <div className="container1">
+      <div className="card m-3 p-3 mx-auto" style={{ maxWidth: "500px" }}>
+        <div className="img-container text-center">
+          <img
+            src={zapatilla.imagen}
+            className="card-img-top"
+            alt={`Zapatillas ${zapatilla.modelo}`}
+            style={{ width: "250px", height: "auto" }}
+          />
         </div>
-      </div>
-      <div className="btn align-itens-center">
-        <button className="btn btn-primary" onClick={() => addToCart(zapatilla)}>
-          Comprar
-        </button>
-        <Link to="/">
-          <button className="btn btn-primary">
-            Ir al Home
+        <div className="card-detalles ms-3">
+          <div className="card-body">
+            <h5 className="card-title">{`${zapatilla.marca} ${zapatilla.modelo}`}</h5>
+            <p className="card-text">{`Descripción: ${zapatilla.descripcion}`}</p>
+          </div>
+        </div>
+        <div className="btn align-itens-center">
+          <button
+            className="btn btn-primary m-2"
+            onClick={() => addToCart(zapatilla)}
+          >
+            Comprar
           </button>
-        </Link>
+          <Link to="/">
+            <button className="btn btn-secondary"
+            >Ir al Home</button>
+          </Link>
+        </div>
       </div>
     </div>
   );
 };
 
 export default CardDetalles;
-
-
-
