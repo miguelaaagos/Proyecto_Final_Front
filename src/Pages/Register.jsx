@@ -19,13 +19,16 @@ const RegisterUsers = () => {
     e.preventDefault();
 
     try {
-<<<<<<< HEAD
+
       const response = await fetch('http://127.0.0.1:8080/crear-usuario', {
         method: 'POST',
-=======
+
       const response = await fetch("http://127.0.0.1:5000/usuario", {
         method: "POST",
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
+      const response = await fetch("http://127.0.0.1:5000/usuario", {
+        method: "POST",
+
         headers: {
           "Content-Type": "application/json",
         },

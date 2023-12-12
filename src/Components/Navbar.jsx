@@ -1,4 +1,5 @@
-<<<<<<< HEAD
+
+
 import React, { useContext, useState } from 'react';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
@@ -8,7 +9,6 @@ import Col from 'react-bootstrap/Col';
 import { BiSearch } from 'react-icons/bi';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ShoesContext } from '../Context';
-=======
 import React, { useContext, useEffect } from "react";
 import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
@@ -20,7 +20,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { ShoesContext } from "../Context";
 import { formatNumber } from "../Price";
 import { FaCartPlus } from "react-icons/fa";
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
 
 function NavBar() {
   const { handleLogin } = useContext(ShoesContext);
@@ -28,10 +28,10 @@ function NavBar() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-<<<<<<< HEAD
+
   const handleLoginSubmit = async () => {
     await handleLogin(email, password);
-=======
+
   useEffect(() => {
     if (loggedInUser) {
       console.log("Usuario autenticado:", loggedInUser);
@@ -88,7 +88,6 @@ function NavBar() {
         </>
       );
     }
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
   };
 
   return (
@@ -114,7 +113,7 @@ function NavBar() {
               </Button>
             </Col>
             <Col xs="auto">
-<<<<<<< HEAD
+
               <NavLink to="/loginusers" className="text-decoration-none">
                 Iniciar Sesión
               </NavLink>
@@ -122,11 +121,15 @@ function NavBar() {
             <Col xs="auto">
               <NavLink to="/register" className="text-decoration-none">
                 Registrarse
-=======
+
               <NavLink to="/carrito" style={{ color: "white", textDecoration: "none" }}>
                 <FaCartPlus className="ml-5" /> (
                 {carrito.length})
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
+              <NavLink to="/carrito" style={{ color: "white", textDecoration: "none" }}>
+                <FaCartPlus className="ml-5" /> (
+                {carrito.length})
+
               </NavLink>
             </Col>
           </Row>
@@ -137,16 +140,4 @@ function NavBar() {
 }
 
 export default NavBar;
-<<<<<<< HEAD
 
-
-
-
-
-
-
-
-
-
-=======
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed

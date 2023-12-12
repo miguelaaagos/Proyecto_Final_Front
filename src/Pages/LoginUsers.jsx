@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 import React, { useState, useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ShoesContext } from '../Context';
@@ -8,7 +8,7 @@ const Login = () => {
   const { handleLogin, loading, loggedInUser } = useContext(ShoesContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-=======
+
 import React, { useState, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ShoesContext } from "../Context";
@@ -19,7 +19,16 @@ const Login = () => {
   const { login, loading, loggedInUser } = useContext(ShoesContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { ShoesContext } from "../Context";
+import Swal from "sweetalert2";
+import Navbar from "../Components/Navbar";
+
+const Login = () => {
+  const { login, loading, loggedInUser } = useContext(ShoesContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [localError, setLocalError] = useState(null);
   const [userNotRegistered, setUserNotRegistered] = useState(false);
@@ -27,14 +36,13 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-<<<<<<< HEAD
+
     if (loggedInUser && Object.keys(loggedInUser).length > 0) {
       navigate('/');
-=======
-    if (loggedInUser) {
-      // Si ya hay un usuario autenticado, redirige a la página principal
+
+    if (loggedInUser) 
       navigate("/");
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
     }
   }, [loggedInUser, navigate]);
 
@@ -53,16 +61,15 @@ const Login = () => {
 
       navigate('/');
     } catch (error) {
-<<<<<<< HEAD
       console.error('Error al iniciar sesión:', error);
       setLocalError(error.message || 'Error al iniciar sesión.');
-=======
+
       Swal.fire({
         icon: "error",
         title: "Error",
         text: "Error al iniciar sesión",
       });
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
     }
   };
 
@@ -79,7 +86,6 @@ const Login = () => {
     <div className="container1">
       <Navbar /> 
       <div className="row justify-content-center">
-<<<<<<< HEAD
         <div className="col-md-6">
           <div className="card">
             <div className="card-header d-flex justify-content-end">
@@ -96,10 +102,15 @@ const Login = () => {
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label>Correo Electrónico</Form.Label>
                   <Form.Control
-=======
+
         <div className="col-md-4">
           <div className="card" id="form">
             <div className="card-body">
+
+        <div className="col-md-4">
+          <div className="card" id="form">
+            <div className="card-body">
+
               <h4 className="card-title text-center">Inicio de Sesión</h4>
               <form>
                 <div className="mb-3">
@@ -107,7 +118,7 @@ const Login = () => {
                     Correo Electrónico
                   </label>
                   <input
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -130,7 +141,7 @@ const Login = () => {
                     checked={rememberMe}
                     onChange={() => setRememberMe(!rememberMe)}
                   />
-<<<<<<< HEAD
+
                 </Form.Group>
                 <Button
                   variant="primary"
@@ -145,7 +156,6 @@ const Login = () => {
                     {localError}
                   </Alert>
                 )}
-=======
                   <label className="form-check-label" htmlFor="rememberMe">
                     Recuérdame
                   </label>
@@ -160,7 +170,7 @@ const Login = () => {
                     {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
                   </button>
                 </div>
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
                 <div className="mt-3">
                   <p className="text-center">
                     <NavLink

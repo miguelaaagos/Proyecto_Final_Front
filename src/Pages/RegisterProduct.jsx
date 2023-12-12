@@ -6,22 +6,13 @@ import Navbar from "../Components/Navbar";
 const RegisterProduct = () => {
   const navigate = useNavigate();
   const [productData, setProductData] = useState({
-<<<<<<< HEAD
-    marca: '',
-    modelo: '',
-    año: '', // Corregido de 'anio'
-    precio: '',
-    descripcion: '',
-    imagen: '',
-=======
+
     marca: "",
     modelo: "",
     año: "",
     precio: "",
     descripcion: "",
     imagen: "",
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
-  });
 
   const handleChange = (e) => {
     const { id, value } = e.target;
@@ -35,14 +26,18 @@ const RegisterProduct = () => {
     e.preventDefault();
 
     try {
-<<<<<<< HEAD
+<
       const response = await fetch('http://127.0.0.1:5000/publicacion', {
         method: 'POST',
-=======
+
       console.log("productData:", productData);
       const response = await fetch("http://127.0.0.1:5000/publicacion", {
         method: "POST",
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
+      console.log("productData:", productData);
+      const response = await fetch("http://127.0.0.1:5000/publicacion", {
+        method: "POST",
+
         headers: {
           "Content-Type": "application/json",
         },
@@ -52,17 +47,16 @@ const RegisterProduct = () => {
       if (response.ok) {
         const { message } = await response.json(); // Extraer mensaje del servidor
         Swal.fire({
-<<<<<<< HEAD
+
           title: 'Producto Registrado!',
           text: `${message}\nMarca: ${productData.marca}\nModelo: ${productData.modelo}\nPrecio: ${productData.precio}`,
           icon: 'success',
           confirmButtonText: 'Aceptar',
-=======
           title: "Producto Registrado!",
           text: `Marca: ${productData.marca}\nModelo: ${productData.modelo}\nPrecio: ${productData.precio}`,
           icon: "success",
           confirmButtonText: "Aceptar",
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
         });
 
         navigate("/");
@@ -80,7 +74,7 @@ const RegisterProduct = () => {
   };
 
   return (
-<<<<<<< HEAD
+
     <form className="w-50 bg-light p-5 mb-4 mx-auto text-center" onSubmit={handleSubmit}>
       <h1 className="mb-4">Publicar Zapatilla:</h1>
       <div className="mb-3">
@@ -170,7 +164,7 @@ const RegisterProduct = () => {
         Publicar Producto
       </button>
     </form>
-=======
+
     <div className="container1">
       <Navbar /> 
       <form
@@ -266,7 +260,7 @@ const RegisterProduct = () => {
         </button>
       </form>
     </div>
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+
   );
 };
 
