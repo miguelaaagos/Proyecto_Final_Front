@@ -23,7 +23,7 @@ const Carrito = () => {
   return (
     <div className="container1">
       <Navbar /> 
-      <div className="detalles bg-light w-50 m-auto p-5">
+      <div className="card detalles w-50 m-auto mt-5 p-5">
         <h5>Detalles del pedido:</h5>
         <div className="p-3 bg-white">
           {carrito.map((producto, i) => (

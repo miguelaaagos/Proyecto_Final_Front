@@ -50,12 +50,20 @@ function NavBar() {
       return (
         <>
           <Col xs="auto">
-            <NavLink to="/register" className="text-decoration-none">
+            <NavLink
+              to="/register"
+              className="text-decoration-none"
+              style={{ color: "white" }}
+            >
               Registrarse
             </NavLink>
           </Col>
           <Col xs="auto">
-            <NavLink to="/loginusers" className="text-decoration-none">
+            <NavLink
+              to="/loginusers"
+              className="text-decoration-none"
+              style={{ color: "white" }}
+            >
               Iniciar Sesión
             </NavLink>
           </Col>
@@ -66,30 +74,39 @@ function NavBar() {
 
   return (
     <>
-        <Navbar className="navbar navbar-dark bg-dark p-3">
-          <Form inline className="mr-auto">
-            <Row className="align-items-center">
-              <Col xs="auto">
-                <Form.Control type="text" placeholder="Buscar Zapatillas" />
-              </Col>
-              <Col xs="auto">
-                <Button type="submit">
-                  <BiSearch style={{ textDecoration: "none" }} />
-                </Button>
-              </Col>
-              {renderAuthLinks()}
-              <Col xs="auto">
-                <NavLink to="/carrito">
-                  <FaCartPlus className="text-decoration-none ml-5" /> (
-                  {carrito.length})
-                </NavLink>
-              </Col>
-            </Row>
-          </Form>
-          <div className="logo-nombre mx-1 mb-0 text-decoration-none">
-            <h4>💳 Total a Pagar: ${formatNumber(0)} </h4>
-          </div>
-        </Navbar>
+      <Navbar className="navbar navbar-dark bg-dark p-3">
+        <Form inline className="mr-auto">
+          <Row className="align-items-center">
+            <div className="col">
+              <NavLink to="/" className="navbar-logo">
+                <img
+                  src="src/assets/img/logo_snicky_blanco.png"
+                  className="d-inline-block align-top"
+                  alt="Logo de la empresa"
+                />
+              </NavLink>
+            </div>
+            <Col xs="auto">
+              <Form.Control type="text" placeholder="Buscar Zapatillas" />
+            </Col>
+            <Col xs="auto">
+              <Button type="submit">
+                <BiSearch style={{ textDecoration: "none" }} />
+              </Button>
+            </Col>
+            {renderAuthLinks()}
+            <Col xs="auto">
+              <NavLink to="/carrito" style={{ color: "white", textDecoration: "none" }}>
+                <FaCartPlus className="ml-5" /> (
+                {carrito.length})
+              </NavLink>
+            </Col>
+          </Row>
+        </Form>
+        <div className="logo-nombre mx-1 mb-0 text-decoration-none">
+          <h4>💳 Total a Pagar: ${formatNumber(0)} </h4>
+        </div>
+      </Navbar>
     </>
   );
 }
