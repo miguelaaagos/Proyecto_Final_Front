@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ShoesContext } from "../Context";
-import Navbar from "../Components/Navbar";
 
 const CardDetalles = () => {
   const { id } = useParams();
@@ -37,7 +36,6 @@ const CardDetalles = () => {
 
   return (
     <div className="container1">
-      <Navbar /> 
       <div className="card m-3 p-3 mx-auto" style={{ maxWidth: "500px" }}>
         <div className="img-container text-center">
           <img

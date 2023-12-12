@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import backgroundImage from "../assets/img/exitosa.png";
-import Navbar from "../Components/Navbar";
 
 const Successful = () => {
   const [countdown, setCountdown] = useState(5);
@@ -25,7 +24,6 @@ const Successful = () => {
 
   return (
     <div className="container1">
-      <Navbar />
       <div className="container">
         <div className="text-center">
           <img src={backgroundImage} alt="Successful" className="w-50" />

@@ -28,26 +28,21 @@ const Card = () => {
     fetchShoes();
   }, []);
 
-
   const handleAddToCart = (zapatilla) => {
-    
     if (loggedInUser) {
- to
-      addToCart(zapatilla);
+      const existingItem = carrito.find((item) => item.id === zapatilla.id);
 
-  const addToCart = (zapatilla) => {
-    const existingItem = carrito.find((item) => item.id === zapatilla.id);
-
-    if (existingItem) {
-      const updatedCarrito = carrito.map((item) =>
-        item.id === zapatilla.id
-          ? { ...item, cantidad: item.cantidad + 1 }
-          : item
-      );
-      setCarrito(updatedCarrito);
-
+      if (existingItem) {
+        const updatedCarrito = carrito.map((item) =>
+          item.id === zapatilla.id
+            ? { ...item, cantidad: item.cantidad + 1 }
+            : item
+        );
+        addToCart(updatedCarrito);
+      } else {
+        addToCart([...carrito, { ...zapatilla, cantidad: 1 }]);
+      }
     } else {
-   
       console.log('Usuario no autenticado. Redirigir a la página de inicio de sesión.');
     }
   };
@@ -56,16 +51,7 @@ const Card = () => {
     <div className="row">
       <div className="card-container d-flex flex-wrap justify-content-around mb-4">
         {shoes.map((zapatilla) => (
-
           <div key={zapatilla.id} className="card m-3 p-3" style={{ width: "18rem" }}>
-
-
-          <div
-            key={zapatilla.id}
-            className="card m-3 p-3"
-            style={{ width: "18rem" }}
-          >
-
             <img
               src={zapatilla.imagen}
               className="card-img-top"
@@ -87,20 +73,6 @@ const Card = () => {
               <Link to={`/detalles/${zapatilla.id}`} className="btn btn-primary">
                 Detalles
               </Link>
-
-                <button
-                  className="btn btn-success mx-2"
-                  onClick={() => addToCart(zapatilla)}
-                >
-                  Comprar
-                </button>
-                <Link
-                  to={`/detalles/${zapatilla.id}`}
-                  className="btn btn-primary"
-                >
-                  Detalles
-                </Link>
-
             </div>
           </div>
         ))}
@@ -110,4 +82,3 @@ const Card = () => {
 };
 
 export default Card;
-

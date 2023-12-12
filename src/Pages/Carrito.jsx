@@ -2,7 +2,6 @@ import React, { useContext, useState } from 'react';
 import { ShoesContext } from '../Context';
 import { formatNumber } from '../Price';
 import { NavLink } from 'react-router-dom';
-import Navbar from '../Components/Navbar';
 
 
 const Carrito = () => {
@@ -20,8 +19,7 @@ const Carrito = () => {
   };
 
   return (
-    <div className="container1">
-      <Navbar /> 
+    <div className="container1"> 
       <div className="card detalles w-50 m-auto mt-5 p-5">
         <h5>Detalles del pedido:</h5>
         <div className="p-3 bg-white">

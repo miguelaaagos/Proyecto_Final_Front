@@ -1,4 +1,3 @@
-
 import React, { useState, useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ShoesContext } from '../Context';
@@ -8,27 +7,6 @@ const Login = () => {
   const { handleLogin, loading, loggedInUser } = useContext(ShoesContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-import React, { useState, useContext, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { ShoesContext } from "../Context";
-import Swal from "sweetalert2";
-import Navbar from "../Components/Navbar";
-
-const Login = () => {
-  const { login, loading, loggedInUser } = useContext(ShoesContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-import React, { useState, useContext, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
-import { ShoesContext } from "../Context";
-import Swal from "sweetalert2";
-import Navbar from "../Components/Navbar";
-
-const Login = () => {
-  const { login, loading, loggedInUser } = useContext(ShoesContext);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [localError, setLocalError] = useState(null);
   const [userNotRegistered, setUserNotRegistered] = useState(false);
@@ -36,13 +14,8 @@ const Login = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-
     if (loggedInUser && Object.keys(loggedInUser).length > 0) {
       navigate('/');
-
-    if (loggedInUser) 
-      navigate("/");
-
     }
   }, [loggedInUser, navigate]);
 
@@ -63,13 +36,6 @@ const Login = () => {
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
       setLocalError(error.message || 'Error al iniciar sesión.');
-
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Error al iniciar sesión",
-      });
-
     }
   };
 
@@ -83,8 +49,7 @@ const Login = () => {
   }
 
   return (
-    <div className="container1">
-      <Navbar /> 
+    <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card">
@@ -102,23 +67,6 @@ const Login = () => {
                 <Form.Group className="mb-3" controlId="email">
                   <Form.Label>Correo Electrónico</Form.Label>
                   <Form.Control
-
-        <div className="col-md-4">
-          <div className="card" id="form">
-            <div className="card-body">
-
-        <div className="col-md-4">
-          <div className="card" id="form">
-            <div className="card-body">
-
-              <h4 className="card-title text-center">Inicio de Sesión</h4>
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Correo Electrónico
-                  </label>
-                  <input
-
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
@@ -141,7 +89,6 @@ const Login = () => {
                     checked={rememberMe}
                     onChange={() => setRememberMe(!rememberMe)}
                   />
-
                 </Form.Group>
                 <Button
                   variant="primary"
@@ -156,27 +103,9 @@ const Login = () => {
                     {localError}
                   </Alert>
                 )}
-                  <label className="form-check-label" htmlFor="rememberMe">
-                    Recuérdame
-                  </label>
-                </div>
-                <div className="d-flex justify-content-center align-items-center">
-                  <button
-                    type="button"
-                    className="btn btn-primary btn-md btn-block"
-                    onClick={handleLogin}
-                    disabled={loading}
-                  >
-                    {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
-                  </button>
-                </div>
-
                 <div className="mt-3">
                   <p className="text-center">
-                    <NavLink
-                      to="/forgottenpassword"
-                      className="text-decoration-none"
-                    >
+                    <NavLink to="/forgottenpassword" className="text-decoration-none">
                       Olvidaste la Contraseña
                     </NavLink>
                   </p>
