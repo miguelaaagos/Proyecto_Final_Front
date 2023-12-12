@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { ShoesContext } from "../Context";
+import Navbar from "../Components/Navbar";
 
 const CardDetalles = () => {
   const { id } = useParams();
@@ -15,10 +16,10 @@ const CardDetalles = () => {
           const data = await response.json();
           setZapatilla(data);
         } else {
-          console.error('Error al obtener detalles de la zapatilla');
+          console.error("Error al obtener detalles de la zapatilla");
         }
       } catch (error) {
-        console.error('Error de red:', error);
+        console.error("Error de red:", error);
       }
     };
 
@@ -51,15 +52,11 @@ const CardDetalles = () => {
         </div>
       </div>
       <div className="btn align-itens-center">
-        <button
-          className="btn btn-primary"
-          onClick={() => addToCart(zapatilla)}
-          disabled={!loggedInUser} 
-        >
+        <button className="btn btn-primary" onClick={() => addToCart(zapatilla)}>
           Comprar
         </button>
         <Link to="/">
-          <button className="btn btn-success mx-5">
+          <button className="btn btn-primary">
             Ir al Home
           </button>
         </Link>
@@ -69,7 +66,6 @@ const CardDetalles = () => {
 };
 
 export default CardDetalles;
-
 
 
 

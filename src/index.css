@@ -1,0 +1,41 @@
+html {
+  min-height: 100%;
+  position: relative;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  font-family: 'Roboto', Arial, sans-serif;
+  color: #212529; /* Color de texto principal, ajusta según tus preferencias */
+}
+
+.container1 {
+  min-height: 100vh; /*importante*/
+}
+
+#form {
+  margin-top: 150px !important;
+}
+
+.footer {
+  bottom: 0;
+}
+
+.navbar-logo {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100px;
+}
+
+.navbar-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.card {
+  border-width: 1px;
+  border-color: #242424;
+}

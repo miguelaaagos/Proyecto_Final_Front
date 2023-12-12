@@ -1,23 +1,24 @@
-import { Link } from 'react-router-dom';
-import backgroundImage from '../assets/img/NotFound.jpeg';
+import { Link } from "react-router-dom";
+import backgroundImage from "../assets/img/404.png";
+import Navbar from "../Components/Navbar";
 
 const NotFound = () => {
-    return (
-        <div className="text-center">
-            <h1>404</h1>
-            <h2>Page not found</h2>
-            <img src={backgroundImage} alt="404" className='w-25' />
-            <p>
-                <Link to="/">
-                    <button
-                  type="button"
-                  className="btn btn-primary btn-lg btn-block"
-                > Ir al Inicio
-                    </button>
-                </Link>
-            </p>
-        </div>
-    );
+  return (
+    <div className="container1">
+      <Navbar />   
+      <div className="text-center mt-4">
+        <img src={backgroundImage} alt="404" className="w-25" />
+        <p>
+          <Link to="/">
+            <button type="button" className="btn btn-primary btn-lg btn-block">
+              {" "}
+              Ir al Inicio
+            </button>
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
 };
 
 export default NotFound;

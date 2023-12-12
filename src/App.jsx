@@ -15,6 +15,7 @@ import Successful from "./Pages/Successful";
 import NavbarAuth from "./Pages/NavbarAuth";
 import NavbarGuest from "./Pages/NavbarGuest";
 import { ShoesContext } from "./Context";
+import './index.css';
 
 function App() {
   const [contextReady, setContextReady] = useState(false);

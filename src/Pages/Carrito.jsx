@@ -3,6 +3,7 @@ import { ShoesContext } from '../Context';
 import { formatNumber } from '../Price';
 import { NavLink } from 'react-router-dom';
 
+
 const Carrito = () => {
   const { carrito, removeFromCart, incrementQuantity, decrementQuantity, isLoggedIn } = useContext(ShoesContext);
   const [showLogin, setShowLogin] = useState(false);
@@ -18,8 +19,8 @@ const Carrito = () => {
   };
 
   return (
-    <div className="container1">
-      <div className="detalles bg-light w-50 m-auto p-5">
+    <div className="carrito p-5">
+      <div className="detalles bg-light w-75 m-auto p-5">
         <h5>Detalles del pedido:</h5>
         <div className="p-3 bg-white">
         {carrito.map((producto) => (
@@ -50,7 +51,7 @@ const Carrito = () => {
 ))}
           <h2 className="my-4">Total: ${formatNumber(total)}</h2>
           <NavLink to="/successful" className="text-decoration-none">
-            <button className="btn btn-success" onClick={handleIrAPagar}>
+            <button className="btn btn-success mx-5">
               Finalizar Comprar
             </button>
           </NavLink>
