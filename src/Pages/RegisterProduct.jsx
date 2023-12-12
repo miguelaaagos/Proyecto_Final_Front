@@ -7,10 +7,10 @@ const RegisterProduct = () => {
   const [productData, setProductData] = useState({
     marca: '',
     modelo: '',
-    año: '',        
+    año: '', // Corregido de 'anio'
     precio: '',
-    descripcion: '', 
-    imagen: ''     
+    descripcion: '',
+    imagen: '',
   });
 
   const handleChange = (e) => {
@@ -25,7 +25,6 @@ const RegisterProduct = () => {
     e.preventDefault();
 
     try {
-      console.log('productData:', productData);
       const response = await fetch('http://127.0.0.1:5000/publicacion', {
         method: 'POST',
         headers: {
@@ -35,9 +34,10 @@ const RegisterProduct = () => {
       });
 
       if (response.ok) {
+        const { message } = await response.json(); // Extraer mensaje del servidor
         Swal.fire({
           title: 'Producto Registrado!',
-          text: `Marca: ${productData.marca}\nModelo: ${productData.modelo}\nPrecio: ${productData.precio}`,
+          text: `${message}\nMarca: ${productData.marca}\nModelo: ${productData.modelo}\nPrecio: ${productData.precio}`,
           icon: 'success',
           confirmButtonText: 'Aceptar',
         });
@@ -68,7 +68,7 @@ const RegisterProduct = () => {
           className="form-control"
           id="marca"
           placeholder="Marca de la zapatilla"
-          value={productData.marca}
+          value={productData.Marca}
           onChange={handleChange}
           required
         />
@@ -82,7 +82,7 @@ const RegisterProduct = () => {
           className="form-control"
           id="modelo"
           placeholder="Modelo"
-          value={productData.modelo}
+          value={productData.Modelo}
           onChange={handleChange}
           required
         />
@@ -92,11 +92,11 @@ const RegisterProduct = () => {
           Año
         </label>
         <input
-          type="text"
+          type="number" // Cambiado a tipo número para el año
           className="form-control"
-          id="año"
+          id="año" // Corregido de 'anio'
           placeholder="Año del Producto"
-          value={productData.año}
+          value={productData.Anio}
           onChange={handleChange}
           required
         />
@@ -110,7 +110,7 @@ const RegisterProduct = () => {
           className="form-control"
           id="precio"
           placeholder="Precio del Producto"
-          value={productData.precio}
+          value={productData.Precio}
           onChange={handleChange}
           required
         />
@@ -123,7 +123,7 @@ const RegisterProduct = () => {
           className="form-control"
           id="descripcion"
           placeholder="Descripción del Producto"
-          value={productData.descripcion}
+          value={productData.Descripcion}
           onChange={handleChange}
           required
         />
@@ -137,7 +137,7 @@ const RegisterProduct = () => {
           className="form-control"
           id="imagen"
           placeholder="URL de la Imagen"
-          value={productData.imagen}
+          value={productData.Imagen}
           onChange={handleChange}
           required
         />
@@ -150,6 +150,3 @@ const RegisterProduct = () => {
 };
 
 export default RegisterProduct;
-
-
-

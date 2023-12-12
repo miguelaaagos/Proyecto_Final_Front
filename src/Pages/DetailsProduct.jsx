@@ -4,7 +4,7 @@ import { ShoesContext } from "../Context";
 
 const CardDetalles = () => {
   const { id } = useParams();
-  const { getZapatillaById, addToCart } = useContext(ShoesContext);
+  const { getZapatillaById, addToCart, loggedInUser } = useContext(ShoesContext);
   const [zapatilla, setZapatilla] = useState(null);
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const CardDetalles = () => {
       }
     };
 
-    if (!getZapatillaById) {
+    if (!getZapatillaById || !getZapatillaById(parseInt(id))) {
       fetchZapatillaDetails();
     } else {
       const zapatillaById = getZapatillaById(parseInt(id));
@@ -51,11 +51,15 @@ const CardDetalles = () => {
         </div>
       </div>
       <div className="btn align-itens-center">
-        <button className="btn btn-primary" onClick={() => addToCart(zapatilla)}>
+        <button
+          className="btn btn-primary"
+          onClick={() => addToCart(zapatilla)}
+          disabled={!loggedInUser} 
+        >
           Comprar
         </button>
         <Link to="/">
-          <button className="btn btn-primary">
+          <button className="btn btn-success mx-5">
             Ir al Home
           </button>
         </Link>
@@ -65,6 +69,7 @@ const CardDetalles = () => {
 };
 
 export default CardDetalles;
+
 
 
 

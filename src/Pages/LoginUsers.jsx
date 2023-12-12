@@ -1,88 +1,108 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ShoesContext } from '../Context';
-import Swal from 'sweetalert2';
+import { Form, Button, Alert } from 'react-bootstrap';
 
 const Login = () => {
-  const { login, loading, loggedInUser } = useContext(ShoesContext);
+  const { handleLogin, loading, loggedInUser } = useContext(ShoesContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [localError, setLocalError] = useState(null);
+  const [userNotRegistered, setUserNotRegistered] = useState(false);
+  const [formClosed, setFormClosed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedInUser) {
-      // Si ya hay un usuario autenticado, redirige a la página principal
+    if (loggedInUser && Object.keys(loggedInUser).length > 0) {
       navigate('/');
     }
   }, [loggedInUser, navigate]);
 
-  const handleLogin = async () => {
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setLocalError(null);
+    setUserNotRegistered(false);
+
     try {
-      await login(email, password);
+      await handleLogin(email, password);
+
+      if (!loggedInUser || Object.keys(loggedInUser).length === 0) {
+        setUserNotRegistered(true);
+        return;
+      }
+
+      navigate('/');
     } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'Error al iniciar sesión',
-      });
+      console.error('Error al iniciar sesión:', error);
+      setLocalError(error.message || 'Error al iniciar sesión.');
     }
   };
+
+  const handleCloseForm = () => {
+    setFormClosed(true);
+    navigate('/'); 
+  };
+
+  if (formClosed) {
+    return null;
+  }
 
   return (
     <div className="container mt-5">
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card">
+            <div className="card-header d-flex justify-content-end">
+              <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseForm}></button>
+            </div>
             <div className="card-body">
               <h5 className="card-title text-center">Inicio de Sesión</h5>
-              <form>
-                <div className="mb-3">
-                  <label htmlFor="email" className="form-label">
-                    Correo Electrónico
-                  </label>
-                  <input
+              {userNotRegistered && (
+                <Alert variant="danger" className="mt-3">
+                  Usuario no registrado. Verifica tu correo y contraseña.
+                </Alert>
+              )}
+              <Form onSubmit={handleLoginSubmit}>
+                <Form.Group className="mb-3" controlId="email">
+                  <Form.Label>Correo Electrónico</Form.Label>
+                  <Form.Control
                     type="email"
-                    className="form-control"
-                    id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="password" className="form-label">
-                    Contraseña
-                  </label>
-                  <input
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="password">
+                  <Form.Label>Contraseña</Form.Label>
+                  <Form.Control
                     type="password"
-                    className="form-control"
-                    id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                </div>
-                <div className="mb-3 form-check">
-                  <input
+                </Form.Group>
+                <Form.Group className="mb-3 form-check">
+                  <Form.Check
                     type="checkbox"
-                    className="form-check-input"
-                    id="rememberMe"
+                    label="Recuérdame"
                     checked={rememberMe}
                     onChange={() => setRememberMe(!rememberMe)}
                   />
-                  <label className="form-check-label" htmlFor="rememberMe">
-                    Recuérdame
-                  </label>
-                </div>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-lg btn-block"
-                  onClick={handleLogin}
+                </Form.Group>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="btn-lg btn-block"
                   disabled={loading}
                 >
                   {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-                </button>
+                </Button>
+                {localError && (
+                  <Alert variant="danger" className="mt-3">
+                    {localError}
+                  </Alert>
+                )}
                 <div className="mt-3">
                   <p className="text-center">
                     <NavLink to="/forgottenpassword" className="text-decoration-none">
@@ -95,7 +115,7 @@ const Login = () => {
                     </NavLink>
                   </p>
                 </div>
-              </form>
+              </Form>
             </div>
           </div>
         </div>
@@ -105,8 +125,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
-
-

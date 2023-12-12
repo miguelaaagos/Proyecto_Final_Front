@@ -3,31 +3,17 @@ import React, { createContext, useState, useEffect } from 'react';
 const ShoesContext = createContext();
 
 const ShoesProvider = ({ children }) => {
-  const [zapatillas, setZapatillas] = useState([]);
-  const [carrito, setCarrito] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [carrito, setCarrito] = useState([]);
 
-  useEffect(() => {
-    const getZapatillas = async () => {
-      try {
-        const res = await fetch('http://localhost:5000/publicacion');
-        const zapatillasData = await res.json();
-        setZapatillas(zapatillasData.publicaciones);
-      } catch (error) {
-        console.error('Error fetching zapatillas:', error);
-      }
-    };
-
-    getZapatillas();
-  }, []);
-
-  const login = async (email, password) => {
+  const handleLogin = async (email, password) => {
     try {
+      setError(null);
       setLoading(true);
 
-      const response = await fetch('http://localhost:5000/usuario/login', {
+      const response = await fetch('http://localhost:8080/iniciar-sesion', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -40,32 +26,87 @@ const ShoesProvider = ({ children }) => {
 
       const responseData = await response.json();
 
-      if (response.ok) {
-        setLoggedInUser(responseData.user); // Asegúrate de que la respuesta contenga la información del usuario
-        setIsModalOpen(false);
-      } else {
-        console.error('Error al iniciar sesión:', responseData.message);
+      if (!response.ok) {
+        throw new Error(responseData.error || 'Hubo un problema al iniciar sesión.');
       }
+
+      setLoggedInUser(responseData.user);
+      return response;
     } catch (error) {
       console.error('Error al procesar la solicitud:', error);
+      setError('Error al procesar la solicitud.');
     } finally {
       setLoading(false);
     }
   };
 
+
+  const addToCart = (product) => {
+    const updatedCart = [...carrito];
+    const updatedItemIndex = updatedCart.findIndex(
+      (item) => item.id === product.id
+    );
+
+    if (updatedItemIndex >= 0) {
+      updatedCart[updatedItemIndex].quantity += 1;
+    } else {
+      updatedCart.push({ ...product, quantity: 1 });
+    }
+    setCarrito(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
+    const handleLogout = () => {
+    setLoggedInUser(null);
+    localStorage.removeItem('user');
+  };
+
+  const removeFromCart = (productId) => {
+    const updatedCart = carrito.filter((product) => product.id !== productId);
+    setCarrito(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
+  const incrementQuantity = (productId) => {
+    const updatedCart = carrito.map((product) =>
+      product.id === productId ? { ...product, quantity: product.quantity + 1 } : product
+    );
+    setCarrito(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
+  const decrementQuantity = (productId) => {
+    const updatedCart = carrito.map((product) =>
+      product.id === productId ? { ...product, quantity: product.quantity - 1 } : product
+    );
+    setCarrito(updatedCart);
+    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  };
+
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    setCarrito(cart);
+  }, []);
+
   const contextValue = {
-    zapatillas,
-    carrito,
-    setCarrito,
-    login,
     loggedInUser,
-    isModalOpen,
-    setIsModalOpen,
+    handleLogout,
+    error,
+    loading,
+    handleLogin,
+    carrito,
+    addToCart,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
   };
 
   return <ShoesContext.Provider value={contextValue}>{children}</ShoesContext.Provider>;
 };
 
 export { ShoesProvider, ShoesContext };
+
+
+
 
 
