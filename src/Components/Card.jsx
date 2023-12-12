@@ -28,26 +28,24 @@ const Card = () => {
     fetchShoes();
   }, []);
 
-<<<<<<< HEAD
   const handleAddToCart = (zapatilla) => {
-    
     if (loggedInUser) {
- to
-      addToCart(zapatilla);
-=======
-  const addToCart = (zapatilla) => {
-    const existingItem = carrito.find((item) => item.id === zapatilla.id);
+      const existingItem = carrito.find((item) => item.id === zapatilla.id);
 
-    if (existingItem) {
-      const updatedCarrito = carrito.map((item) =>
-        item.id === zapatilla.id
-          ? { ...item, cantidad: item.cantidad + 1 }
-          : item
-      );
-      setCarrito(updatedCarrito);
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
+      if (existingItem) {
+        // Si el artículo ya está en el carrito, actualizar la cantidad
+        addToCart({
+          ...zapatilla,
+          cantidad: existingItem.cantidad + 1,
+        });
+      } else {
+        // Si el artículo no está en el carrito, agregarlo
+        addToCart({
+          ...zapatilla,
+          cantidad: 1,
+        });
+      }
     } else {
-   
       console.log('Usuario no autenticado. Redirigir a la página de inicio de sesión.');
     }
   };
@@ -56,15 +54,7 @@ const Card = () => {
     <div className="row">
       <div className="card-container d-flex flex-wrap justify-content-around mb-4">
         {shoes.map((zapatilla) => (
-<<<<<<< HEAD
           <div key={zapatilla.id} className="card m-3 p-3" style={{ width: "18rem" }}>
-=======
-          <div
-            key={zapatilla.id}
-            className="card m-3 p-3"
-            style={{ width: "18rem" }}
-          >
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
             <img
               src={zapatilla.imagen}
               className="card-img-top"
@@ -75,7 +65,7 @@ const Card = () => {
               <p className="card-text">{`Modelo: ${zapatilla.modelo}`}</p>
               <p className="card-text">{`Año: ${zapatilla.año}`}</p>
               <p className="card-text">{`Precio: $${zapatilla.precio}`}</p>
-<<<<<<< HEAD
+
               <button
                 className="btn btn-success mx-2"
                 onClick={() => handleAddToCart(zapatilla)}
@@ -86,20 +76,6 @@ const Card = () => {
               <Link to={`/detalles/${zapatilla.id}`} className="btn btn-primary">
                 Detalles
               </Link>
-=======
-                <button
-                  className="btn btn-success mx-2"
-                  onClick={() => addToCart(zapatilla)}
-                >
-                  Comprar
-                </button>
-                <Link
-                  to={`/detalles/${zapatilla.id}`}
-                  className="btn btn-primary"
-                >
-                  Detalles
-                </Link>
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
             </div>
           </div>
         ))}
@@ -109,8 +85,3 @@ const Card = () => {
 };
 
 export default Card;
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7aef7070b5debd496185e9b28af8bba89d0efbed
