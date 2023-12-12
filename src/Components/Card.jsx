@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { ShoesContext } from "../Context";
 
 const Card = () => {
-  const { carrito, setCarrito } = useContext(ShoesContext);
+  const { carrito, addToCart, loggedInUser } = useContext(ShoesContext);
   const [shoes, setShoes] = useState([]);
 
   useEffect(() => {
@@ -12,7 +12,11 @@ const Card = () => {
         const response = await fetch("http://127.0.0.1:5000/publicacion");
         if (response.ok) {
           const data = await response.json();
-          setShoes(data);
+          if (Array.isArray(data)) {
+            setShoes(data);
+          } else {
+            console.error("Los datos del servidor no son un array:", data);
+          }
         } else {
           console.error("Error al obtener datos de zapatillas");
         }
@@ -24,6 +28,13 @@ const Card = () => {
     fetchShoes();
   }, []);
 
+
+  const handleAddToCart = (zapatilla) => {
+    
+    if (loggedInUser) {
+ to
+      addToCart(zapatilla);
+
   const addToCart = (zapatilla) => {
     const existingItem = carrito.find((item) => item.id === zapatilla.id);
 
@@ -34,8 +45,10 @@ const Card = () => {
           : item
       );
       setCarrito(updatedCarrito);
+
     } else {
-      setCarrito([...carrito, { ...zapatilla, cantidad: 1 }]);
+   
+      console.log('Usuario no autenticado. Redirigir a la página de inicio de sesión.');
     }
   };
 
@@ -43,11 +56,16 @@ const Card = () => {
     <div className="row">
       <div className="card-container d-flex flex-wrap justify-content-around mb-4">
         {shoes.map((zapatilla) => (
+
+          <div key={zapatilla.id} className="card m-3 p-3" style={{ width: "18rem" }}>
+
+
           <div
             key={zapatilla.id}
             className="card m-3 p-3"
             style={{ width: "18rem" }}
           >
+
             <img
               src={zapatilla.imagen}
               className="card-img-top"
@@ -58,6 +76,18 @@ const Card = () => {
               <p className="card-text">{`Modelo: ${zapatilla.modelo}`}</p>
               <p className="card-text">{`Año: ${zapatilla.año}`}</p>
               <p className="card-text">{`Precio: $${zapatilla.precio}`}</p>
+
+              <button
+                className="btn btn-success mx-2"
+                onClick={() => handleAddToCart(zapatilla)}
+                disabled={!loggedInUser}
+              >
+                Comprar
+              </button>
+              <Link to={`/detalles/${zapatilla.id}`} className="btn btn-primary">
+                Detalles
+              </Link>
+
                 <button
                   className="btn btn-success mx-2"
                   onClick={() => addToCart(zapatilla)}
@@ -70,6 +100,7 @@ const Card = () => {
                 >
                   Detalles
                 </Link>
+
             </div>
           </div>
         ))}
@@ -79,3 +110,4 @@ const Card = () => {
 };
 
 export default Card;
+

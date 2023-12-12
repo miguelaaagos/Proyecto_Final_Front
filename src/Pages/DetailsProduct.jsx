@@ -5,7 +5,7 @@ import Navbar from "../Components/Navbar";
 
 const CardDetalles = () => {
   const { id } = useParams();
-  const { getZapatillaById, addToCart } = useContext(ShoesContext);
+  const { getZapatillaById, addToCart, loggedInUser } = useContext(ShoesContext);
   const [zapatilla, setZapatilla] = useState(null);
 
   useEffect(() => {
@@ -23,7 +23,7 @@ const CardDetalles = () => {
       }
     };
 
-    if (!getZapatillaById) {
+    if (!getZapatillaById || !getZapatillaById(parseInt(id))) {
       fetchZapatillaDetails();
     } else {
       const zapatillaById = getZapatillaById(parseInt(id));

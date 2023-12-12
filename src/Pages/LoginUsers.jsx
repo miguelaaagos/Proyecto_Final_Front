@@ -1,3 +1,24 @@
+
+import React, { useState, useContext, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { ShoesContext } from '../Context';
+import { Form, Button, Alert } from 'react-bootstrap';
+
+const Login = () => {
+  const { handleLogin, loading, loggedInUser } = useContext(ShoesContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { ShoesContext } from "../Context";
+import Swal from "sweetalert2";
+import Navbar from "../Components/Navbar";
+
+const Login = () => {
+  const { login, loading, loggedInUser } = useContext(ShoesContext);
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 import React, { useState, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ShoesContext } from "../Context";
@@ -9,34 +30,87 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const [localError, setLocalError] = useState(null);
+  const [userNotRegistered, setUserNotRegistered] = useState(false);
+  const [formClosed, setFormClosed] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (loggedInUser) {
-      // Si ya hay un usuario autenticado, redirige a la página principal
+
+    if (loggedInUser && Object.keys(loggedInUser).length > 0) {
+      navigate('/');
+
+    if (loggedInUser) 
       navigate("/");
+
     }
   }, [loggedInUser, navigate]);
 
-  const handleLogin = async () => {
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    setLocalError(null);
+    setUserNotRegistered(false);
+
     try {
-      await login(email, password);
+      await handleLogin(email, password);
+
+      if (!loggedInUser || Object.keys(loggedInUser).length === 0) {
+        setUserNotRegistered(true);
+        return;
+      }
+
+      navigate('/');
     } catch (error) {
+      console.error('Error al iniciar sesión:', error);
+      setLocalError(error.message || 'Error al iniciar sesión.');
+
       Swal.fire({
         icon: "error",
         title: "Error",
         text: "Error al iniciar sesión",
       });
+
     }
   };
+
+  const handleCloseForm = () => {
+    setFormClosed(true);
+    navigate('/'); 
+  };
+
+  if (formClosed) {
+    return null;
+  }
 
   return (
     <div className="container1">
       <Navbar /> 
       <div className="row justify-content-center">
+        <div className="col-md-6">
+          <div className="card">
+            <div className="card-header d-flex justify-content-end">
+              <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseForm}></button>
+            </div>
+            <div className="card-body">
+              <h5 className="card-title text-center">Inicio de Sesión</h5>
+              {userNotRegistered && (
+                <Alert variant="danger" className="mt-3">
+                  Usuario no registrado. Verifica tu correo y contraseña.
+                </Alert>
+              )}
+              <Form onSubmit={handleLoginSubmit}>
+                <Form.Group className="mb-3" controlId="email">
+                  <Form.Label>Correo Electrónico</Form.Label>
+                  <Form.Control
+
         <div className="col-md-4">
           <div className="card" id="form">
             <div className="card-body">
+
+        <div className="col-md-4">
+          <div className="card" id="form">
+            <div className="card-body">
+
               <h4 className="card-title text-center">Inicio de Sesión</h4>
               <form>
                 <div className="mb-3">
@@ -44,35 +118,44 @@ const Login = () => {
                     Correo Electrónico
                   </label>
                   <input
+
                     type="email"
-                    className="form-control"
-                    id="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                   />
-                </div>
-                <div className="mb-3">
-                  <label htmlFor="password" className="form-label">
-                    Contraseña
-                  </label>
-                  <input
+                </Form.Group>
+                <Form.Group className="mb-3" controlId="password">
+                  <Form.Label>Contraseña</Form.Label>
+                  <Form.Control
                     type="password"
-                    className="form-control"
-                    id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                   />
-                </div>
-                <div className="mb-3 form-check">
-                  <input
+                </Form.Group>
+                <Form.Group className="mb-3 form-check">
+                  <Form.Check
                     type="checkbox"
-                    className="form-check-input"
-                    id="rememberMe"
+                    label="Recuérdame"
                     checked={rememberMe}
                     onChange={() => setRememberMe(!rememberMe)}
                   />
+
+                </Form.Group>
+                <Button
+                  variant="primary"
+                  type="submit"
+                  className="btn-lg btn-block"
+                  disabled={loading}
+                >
+                  {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+                </Button>
+                {localError && (
+                  <Alert variant="danger" className="mt-3">
+                    {localError}
+                  </Alert>
+                )}
                   <label className="form-check-label" htmlFor="rememberMe">
                     Recuérdame
                   </label>
@@ -87,6 +170,7 @@ const Login = () => {
                     {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
                   </button>
                 </div>
+
                 <div className="mt-3">
                   <p className="text-center">
                     <NavLink
@@ -102,7 +186,7 @@ const Login = () => {
                     </NavLink>
                   </p>
                 </div>
-              </form>
+              </Form>
             </div>
           </div>
         </div>
