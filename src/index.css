@@ -6,7 +6,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: Arial, sans-serif;
+  background-color: white;
+  font-family: 'Roboto', Arial, sans-serif;
   color: #212529; /* Color de texto principal, ajusta según tus preferencias */
 }
 
@@ -20,4 +21,21 @@ body {
 
 .footer {
   bottom: 0;
+}
+
+.navbar-logo {
+  display: inline-block;
+  vertical-align: middle;
+  width: 100px;
+}
+
+.navbar-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.card {
+  border-width: 1px;
+  border-color: #242424;
 }

@@ -6,7 +6,7 @@ import Col from "react-bootstrap/Col";
 const MyFooter = () => {
   return (
     <div className="d-flex flex-column">
-      <footer className="footer mt-auto py-3 bg-dark" >
+      <footer className="footer mt-auto py-3 bg-dark">
         <Container>
           <Row>
             <Col md={12}>
@@ -37,7 +37,7 @@ const MyFooter = () => {
                 </li>
                 <li>
                   <a href="#ayuda" className="text-light text-decoration-none">
-                    Ayuda
+                    © 2023 Snicky <i class="fa-brands fa-instagram mr-2"></i> <i class="fab fa-facebook-f mr-2"></i> <i class="fa-brands fa-twitter"></i>
                   </a>
                 </li>
               </ul>

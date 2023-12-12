@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import backgroundImage from "../assets/img/NotFound.jpeg";
+import backgroundImage from "../assets/img/404.png";
 import Navbar from "../Components/Navbar";
 
 const NotFound = () => {
