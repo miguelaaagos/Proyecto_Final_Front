@@ -16,6 +16,7 @@ import NavbarAuth from "./Pages/NavbarAuth";
 import NavbarGuest from "./Pages/NavbarGuest";
 import { ShoesContext } from "./Context";
 import './index.css';
+import Paymentgateway from "./Pages/Paymentgateway";
 
 function App() {
   const [contextReady, setContextReady] = useState(false);
@@ -44,6 +45,7 @@ function App() {
         <Route path="*" element={<NotFound />} />
         <Route path="/detailsusers" element={<DetailsUsers />} />
         <Route path="/successful" element={<Successful />} />
+        <Route path="/tarjeta" element={<Paymentgateway />} />
       </Routes>
       <Footer />
     </BrowserRouter>

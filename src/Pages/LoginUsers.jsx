@@ -53,14 +53,14 @@ const Login = () => {
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card" id="form">
-            <div className="d-flex justify-content-end">
+            {/* <div className="d-flex justify-content-end" style={{ marginTop: "0"}}>
               <button
                 type="button"
                 className="btn-close"
                 aria-label="Close"
                 onClick={handleCloseForm}
               ></button>
-            </div>
+            </div> */}
             <div className="card-body">
               <h4 className="card-title text-center">Inicio de Sesión</h4>
               {userNotRegistered && (
@@ -119,7 +119,7 @@ const Login = () => {
                       Olvidaste la Contraseña
                     </NavLink>
                   </p>
-                  <p className="text-center">
+                  <p className="text-center" style={ { marginTop: "0" }}>
                     <NavLink to="/register" className="text-decoration-none">
                       ¿No tienes una cuenta? Regístrate
                     </NavLink>
