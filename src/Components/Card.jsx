@@ -62,7 +62,6 @@ const Card = () => {
               <p className="card-text">{`Modelo: ${zapatilla.modelo}`}</p>
               <p className="card-text">{`Año: ${zapatilla.año}`}</p>
               <p className="card-text">{`Precio: $${zapatilla.precio}`}</p>
-
               <button
                 className="btn btn-success mx-2"
                 onClick={() => handleAddToCart(zapatilla)}

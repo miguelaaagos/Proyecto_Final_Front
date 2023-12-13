@@ -109,7 +109,7 @@ const DetailsUsers = () => {
   return (
     <div className='text-center'>
       <img src={backgroundImage} alt="404" style={{ height: '200px' }} />
-      <h1>Usuario: {loggedInUser.Username}</h1>
+      <h1 className='fw-bold'>Usuario: {loggedInUser.Username}</h1>
       <div className="mx-auto d-flex align-items-center">
         <Col xs="auto">
           <Button type="submit">
@@ -126,7 +126,7 @@ const DetailsUsers = () => {
         </button>
       </div>
       <div>
-        <h2>Publicaciones del Usuario</h2>
+        <h2 className='mb-5 mt-3 fw-bold'>Publicaciones del Usuario</h2>
         {userPosts.map((post) => (
           <div key={post.id}>
             <div className="d-flex justify-content-between mx-5 px-5">

@@ -24,19 +24,18 @@ function NavbarAuth() {
   };
 
   return (
-    <Navbar className="bg-light p-3">
-      <div className="mx-auto d-flex align-items-center">
-        <NavLink to="/carrito" className="text-decoration-none">
-          🛒 ({carrito ? carrito.length : 0})
-        </NavLink>
-        <span className='mx-5 fw-bold'>Hola 😎
-          <NavLink to="/detailsusers" className="text-decoration-none mx-3">
-            {loggedInUser.Username}
-          </NavLink>
-        </span>
-        <Form inline className="ml-auto" onSubmit={handleSearch}>
-          <Row className="align-items-center">
-            <Col xs="auto">
+    <Navbar className="navbar navbar-dark bg-dark p-3">
+      <div className="mr-auto d-flex align-items-center">
+        <div className="col">
+            <NavLink to="/" className="navbar-logo">
+              <img
+                src="src/assets/img/logo_snicky_blanco.png"
+                className="d-inline-block align-top"
+                alt="Logo de la empresa"
+              />
+            </NavLink>
+          </div>
+          <Col xs="auto">
               <FormControl
                 type="text"
                 placeholder="Buscar zapatillas"
@@ -45,14 +44,24 @@ function NavbarAuth() {
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </Col>
-            <Col xs="auto">
+            <Col xs="auto" className='mx-4'>
               <Button variant="outline-success" type="submit">
                 <BiSearch style={{ textDecoration: 'none' }} />
               </Button>
             </Col>
+        <span className='mx-5 fw-bold text-white'>Bienvenido,
+          <NavLink to="/detailsusers" className="text-decoration-none mx-1 text-white">
+            {loggedInUser.Username}👨‍💼
+          </NavLink>
+        </span>
+        <NavLink to="/carrito" className="text-decoration-none text-white">
+          🛒 ({carrito ? carrito.length : 0})
+        </NavLink>
+        <Form inline className="ml-auto" onSubmit={handleSearch}>
+          <Row className="align-items-center">
           </Row>
         </Form>
-        <Button variant="link" className="text-decoration-none" onClick={handleLogoutClick}>
+        <Button variant="link" className="text-decoration-none text-white" onClick={handleLogoutClick}>
           Cerrar Sesión
         </Button>
       </div>
