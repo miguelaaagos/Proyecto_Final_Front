@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { NavLink } from "react-router-dom";
+
 const Paymentgateway = () => {
   const [value, setValue] = useState("");
   const handleChange = (e) => {
@@ -134,9 +136,11 @@ const Paymentgateway = () => {
               Cancelar
             </button>
             <div style={{ marginRight: "1rem" }}></div>
-            <button type="submit" className="btn btn-primary">
-              Realizar Pago
-            </button>
+            <NavLink to="/successful" className="text-decoration-none">
+              <button type="submit" className="btn btn-primary">
+                Realizar Pago
+              </button>
+            </NavLink>
           </div>
         </div>
       </form>
@@ -144,13 +148,3 @@ const Paymentgateway = () => {
   );
 };
 export default Paymentgateway;
-
-
-
-
-
-
-
-
-
-

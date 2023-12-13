@@ -50,7 +50,7 @@ const Carrito = () => {
   </div>
 ))}
           <h2 className="my-4">Total: ${formatNumber(total)}</h2>
-          <NavLink to="/successful" className="text-decoration-none">
+          <NavLink to="/tarjeta" className="text-decoration-none">
             <button className="btn btn-success">
               Finalizar Comprar
             </button>
