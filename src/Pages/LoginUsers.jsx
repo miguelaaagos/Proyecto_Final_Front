@@ -1,12 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { ShoesContext } from '../Context';
-import { Form, Button, Alert } from 'react-bootstrap';
+import React, { useState, useContext, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { ShoesContext } from "../Context";
+import { Form, Button, Alert } from "react-bootstrap";
 
 const Login = () => {
   const { handleLogin, loading, loggedInUser } = useContext(ShoesContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [localError, setLocalError] = useState(null);
   const [userNotRegistered, setUserNotRegistered] = useState(false);
@@ -15,7 +15,7 @@ const Login = () => {
 
   useEffect(() => {
     if (loggedInUser && Object.keys(loggedInUser).length > 0) {
-      navigate('/');
+      navigate("/");
     }
   }, [loggedInUser, navigate]);
 
@@ -32,16 +32,16 @@ const Login = () => {
         return;
       }
 
-      navigate('/');
+      navigate("/");
     } catch (error) {
-      console.error('Error al iniciar sesión:', error);
-      setLocalError(error.message || 'Error al iniciar sesión.');
+      console.error("Error al iniciar sesión:", error);
+      setLocalError(error.message || "Error al iniciar sesión.");
     }
   };
 
   const handleCloseForm = () => {
     setFormClosed(true);
-    navigate('/'); 
+    navigate("/");
   };
 
   if (formClosed) {
@@ -49,15 +49,20 @@ const Login = () => {
   }
 
   return (
-    <div className="container mt-5">
+    <div className="container container1">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          <div className="card">
-            <div className="card-header d-flex justify-content-end">
-              <button type="button" className="btn-close" aria-label="Close" onClick={handleCloseForm}></button>
+          <div className="card" id="form">
+            <div className="d-flex justify-content-end">
+              <button
+                type="button"
+                className="btn-close"
+                aria-label="Close"
+                onClick={handleCloseForm}
+              ></button>
             </div>
             <div className="card-body">
-              <h5 className="card-title text-center">Inicio de Sesión</h5>
+              <h4 className="card-title text-center">Inicio de Sesión</h4>
               {userNotRegistered && (
                 <Alert variant="danger" className="mt-3">
                   Usuario no registrado. Verifica tu correo y contraseña.
@@ -90,14 +95,16 @@ const Login = () => {
                     onChange={() => setRememberMe(!rememberMe)}
                   />
                 </Form.Group>
-                <Button
-                  variant="primary"
-                  type="submit"
-                  className="btn-lg btn-block"
-                  disabled={loading}
-                >
-                  {loading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
-                </Button>
+                <div className="d-flex justify-content-center align-items-center">
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="btn-md btn-block"
+                    disabled={loading}
+                  >
+                    {loading ? "Iniciando sesión..." : "Iniciar Sesión"}
+                  </Button>
+                </div>
                 {localError && (
                   <Alert variant="danger" className="mt-3">
                     {localError}
@@ -105,7 +112,10 @@ const Login = () => {
                 )}
                 <div className="mt-3">
                   <p className="text-center">
-                    <NavLink to="/forgottenpassword" className="text-decoration-none">
+                    <NavLink
+                      to="/forgottenpassword"
+                      className="text-decoration-none"
+                    >
                       Olvidaste la Contraseña
                     </NavLink>
                   </p>

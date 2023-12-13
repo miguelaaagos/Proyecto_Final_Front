@@ -52,6 +52,9 @@ const Carrito = () => {
           <NavLink to="/successful" className="text-decoration-none">
             <button className="btn btn-success" onClick={handleIrAPagar}>
               {loggedInUser ? 'Finalizar Compra' : 'Iniciar Sesión para Pagar'}
+          <NavLink to="/tarjeta" className="text-decoration-none">
+            <button className="btn btn-success">
+              Finalizar Comprar
             </button>
           </NavLink>
           <NavLink to="/" className="text-decoration-none">
