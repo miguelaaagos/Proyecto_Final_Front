@@ -18,7 +18,7 @@ const RegisterUsers = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/usuario", {
+      const response = await fetch("http://localhost:8080/crear-usuario", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -56,12 +56,12 @@ const RegisterUsers = () => {
   };
 
   return (
-    <div className="container1">
+    <div className="container container1">
       <form className="w-50 bg-light mb-4 mx-auto text-center" onSubmit={handleSubmit}>
         <div className="card" id="form">
           <div className="card-body">
-            <h4 className="mb-4 card-title text-center">Registro de Usuarios</h4>
-            <div className="mb-3">
+            <h4 className="card-title text-center mb-2">Registro de Usuarios</h4>
+            <div className="mt-3">
               <label htmlFor="email" className="form-label fs-5">
                 E-mail
               </label>
@@ -91,7 +91,7 @@ const RegisterUsers = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="username" className="form-label fs-5">
-                Ingrese su Nombre de Usuario
+                Ingrese su nombre de usuario
               </label>
               <input
                 type="text"
@@ -103,7 +103,7 @@ const RegisterUsers = () => {
                 required
               />
             </div>
-            <button type="submit" className="btn btn-primary">
+            <button type="submit" className="btn btn-primary mt-3">
               Registrar
             </button>
           </div>
