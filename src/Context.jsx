@@ -40,7 +40,6 @@ const ShoesProvider = ({ children }) => {
     }
   };
 
-
   const addToCart = (product) => {
     const updatedCart = [...carrito];
     const updatedItemIndex = updatedCart.findIndex(
@@ -52,11 +51,14 @@ const ShoesProvider = ({ children }) => {
     } else {
       updatedCart.push({ ...product, quantity: 1 });
     }
+
+    const updatedCartForLocalStorage = updatedCart.map(({ quantity, ...rest }) => rest);
+    localStorage.setItem('cart', JSON.stringify(updatedCartForLocalStorage));
+
     setCarrito(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
-    const handleLogout = () => {
+  const handleLogout = () => {
     setLoggedInUser(null);
     localStorage.removeItem('user');
   };
@@ -85,8 +87,11 @@ const ShoesProvider = ({ children }) => {
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    console.log('Cart from localStorage:', cart);
     setCarrito(cart);
+    localStorage.clear();
   }, []);
+  
 
   const contextValue = {
     loggedInUser,
@@ -105,6 +110,7 @@ const ShoesProvider = ({ children }) => {
 };
 
 export { ShoesProvider, ShoesContext };
+
 
 
 

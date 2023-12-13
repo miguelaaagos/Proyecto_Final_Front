@@ -33,6 +33,7 @@ const Card = () => {
       const existingItem = carrito.find((item) => item.id === zapatilla.id);
 
       if (existingItem) {
+
         const updatedCarrito = carrito.map((item) =>
           item.id === zapatilla.id
             ? { ...item, cantidad: item.cantidad + 1 }
