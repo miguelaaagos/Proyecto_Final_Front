@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Paymentgateway = () => {
   const [cardNumber, setCardNumber] = useState("");
@@ -11,6 +12,7 @@ const Paymentgateway = () => {
   const navigate = useNavigate();
 
   const handleInputChange = (e, setter) => {
+
     const inputValue = e.target.value;
     if (setter === setCardNumber || setter === setSecurityCode) {
       if (!/^\d*$/.test(inputValue)) {
@@ -18,6 +20,28 @@ const Paymentgateway = () => {
       }
     }
     setter(inputValue);
+
+    let inputValue = e.target.value;
+
+    if (setter === setCardNumber || setter === setSecurityCode) {
+      inputValue = inputValue.replace(/\D/g, ""); // Remove non-digit characters
+    }
+
+    if (setter === setExpiryDate) {
+
+      if (inputValue.length === 2) {
+        inputValue += "/";
+      }
+      else if (inputValue.length >= 3) {
+        inputValue = inputValue.slice(0, 2) + "/" + inputValue.slice(3);
+      }
+    }
+    const formattedValue = inputValue.slice(0, 16);
+
+
+    const spacedValue = formattedValue.replace(/(\d{4})(?=.)/g, "$1 ");
+
+    setter(spacedValue);
 
     const allFieldsFilled =
       cardNumber !== "" &&
@@ -29,7 +53,6 @@ const Paymentgateway = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     if (!isButtonEnabled) {
       return;
     }
@@ -56,6 +79,11 @@ const Paymentgateway = () => {
                 onChange={(e) => handleInputChange(e, setCardNumber)}
                 pattern="[0-9]*"
                 maxLength="19"
+                id="Numeros"
+                value={cardNumber}
+                onChange={(e) => handleInputChange(e, setCardNumber)}
+                maxLength={19} // Allow only 16 digits + 3 spaces
+                pattern="\d{4}\s?\d{4}\s?\d{4}\s?\d{4}" // Ensure valid format
                 required
               />
             </div>
@@ -151,12 +179,21 @@ const Paymentgateway = () => {
             </div>
           </div>
           <div
-            className="card-footer"
-            style={{ display: "flex", justifyContent: "end" }}
+            className="card-footer" style={{ display: "flex", justifyContent: "end" }}
           >
             <button type="submit" className="btn btn-primary" disabled={!isButtonEnabled}>
               Realizar Pago
             </button>
+            <NavLink to="/" className="Text-decoration-none">
+              <button type="submit" className="btn btn-secondary m-2">
+                Cancelar
+              </button>
+            </NavLink>
+            <NavLink to="/Loading" className="Text-decoration-none">
+              <button type="submit" className="btn btn-primary m-2" disabled={!isButtonEnabled}>
+                Realizar Pago
+              </button>
+            </NavLink>
           </div>
         </div>
       </form>
