@@ -1,28 +1,60 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const Paymentgateway = () => {
-  const [value, setValue] = useState("");
-  const handleChange = (e) => {
-    const inputValue = e.target.value;
-    const formattedValue = inputValue.replace(/\D/g, "").slice(0, 16);
-    const maskedValue = formattedValue.replace(/(\d{4})(?=\d)/g, "$1 ");
-    setValue(maskedValue);
-  };
-  const [date, setDate] = useState("");
-  const handleDateChange = (e) => {
-    const inputDate = e.target.value;
-    let formattedDate = inputDate;
-    if (inputDate.length === 2) {
-      formattedDate += "/";
+  const [cardNumber, setCardNumber] = useState("");
+  const [cardName, setCardName] = useState("");
+  const [expiryDate, setExpiryDate] = useState("");
+  const [securityCode, setSecurityCode] = useState("");
+  const [paymentMethod, setPaymentMethod] = useState("mastercard");
+  const [isButtonEnabled, setIsButtonEnabled] = useState(false);
+  const navigate = useNavigate();
+
+  const handleInputChange = (e, setter) => {
+    let inputValue = e.target.value;
+
+    if (setter === setCardNumber || setter === setSecurityCode) {
+      inputValue = inputValue.replace(/\D/g, ""); // Remove non-digit characters
     }
-    setDate(formattedDate);
+
+    if (setter === setExpiryDate) {
+      // Update expiryDate with "/" after 2 digits
+      if (inputValue.length === 2) {
+        inputValue += "/";
+      }
+      // Allow deletion of all characters after the "/" character
+      else if (inputValue.length >= 3) {
+        inputValue = inputValue.slice(0, 2) + "/" + inputValue.slice(3);
+      }
+    }
+
+    // Limit card number length to 16
+    const formattedValue = inputValue.slice(0, 16);
+
+    // Add spaces every 4 digits (except for the last 4)
+    const spacedValue = formattedValue.replace(/(\d{4})(?=.)/g, "$1 ");
+
+    setter(spacedValue);
+
+    // Update state variables for button enablement
+    const allFieldsFilled =
+      cardNumber !== "" &&
+      cardName !== "" &&
+      expiryDate !== "" &&
+      securityCode !== "";
+    setIsButtonEnabled(allFieldsFilled);
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (!isButtonEnabled) {
+      return;
+    }
+  };
+
   return (
     <div className="container container1">
-      <form className="w-50 bg-light mb-4 mx-auto">
+      <form className="w-50 bg-light mb-4 mx-auto" onSubmit={handleSubmit}>
         <div className="card" id="form">
           <div className="card-header text-center">
             <strong className="fs-4">Formulario de Pago</strong>
@@ -35,12 +67,11 @@ const Paymentgateway = () => {
               <input
                 type="text"
                 className="form-control"
-                id=""
-                placeholder="Número de tarjeta"
-                value={value}
-                onChange={handleChange}
-                pattern="[0-9]*"
-                maxLength="19"
+                id="Numeros"
+                value={cardNumber}
+                onChange={(e) => handleInputChange(e, setCardNumber)}
+                maxLength={19} // Allow only 16 digits + 3 spaces
+                pattern="\d{4}\s?\d{4}\s?\d{4}\s?\d{4}" // Ensure valid format
                 required
               />
             </div>
@@ -61,6 +92,8 @@ const Paymentgateway = () => {
                     event.preventDefault();
                   }
                 }}
+                value={cardName}
+                onChange={(e) => handleInputChange(e, setCardName)}
               />
             </div>
             <div className="col-12 mb-5 mt-4">
@@ -76,8 +109,8 @@ const Paymentgateway = () => {
                     placeholder="MM/AAAA"
                     pattern="\d{2}/\d{4}"
                     maxLength="7"
-                    value={date}
-                    onChange={handleDateChange}
+                    value={expiryDate}
+                    onChange={(e) => handleInputChange(e, setExpiryDate)}
                     required
                   />
                 </div>
@@ -95,6 +128,8 @@ const Paymentgateway = () => {
                       pattern="[0-9]{3}"
                       required
                       style={{ width: "100px" }}
+                      value={securityCode}
+                      onChange={(e) => handleInputChange(e, setSecurityCode)}
                     />
                   </div>
                 </div>
@@ -106,7 +141,8 @@ const Paymentgateway = () => {
                       name="paymentMethods"
                       id="mastercard"
                       value="mastercard"
-                      defaultChecked
+                      onChange={() => setPaymentMethod("mastercard")}
+                      checked={paymentMethod === "mastercard"}
                     />
                     <label className="form-check-label" htmlFor="mastercard">
                       Tarjeta de Debito
@@ -119,6 +155,8 @@ const Paymentgateway = () => {
                       name="paymentMethods"
                       id="visa"
                       value="visa"
+                      onChange={() => setPaymentMethod("visa")}
+                      checked={paymentMethod === "visa"}
                     />
                     <label className="form-check-label" htmlFor="visa">
                       Tarjeta de Crédito
@@ -129,15 +167,17 @@ const Paymentgateway = () => {
             </div>
           </div>
           <div
-            className="card-footer"
-            style={{ display: "flex", justifyContent: "end" }}
+            className="card-footer" style={{ display: "flex", justifyContent: "end" }}
           >
-            <button type="submit" className="btn btn-secondary mr-3">
-              Cancelar
-            </button>
-            <div style={{ marginRight: "1rem" }}></div>
-            <NavLink to="/successful" className="text-decoration-none">
-              <button type="submit" className="btn btn-primary">
+            <NavLink to="/" className="Text-decoration-none">
+              <button type="submit" className="btn btn-secondary m-2">
+                Cancelar
+              </button>
+            </NavLink>
+
+
+            <NavLink to="/Loading" className="Text-decoration-none">
+              <button type="submit" className="btn btn-primary m-2" disabled={!isButtonEnabled}>
                 Realizar Pago
               </button>
             </NavLink>

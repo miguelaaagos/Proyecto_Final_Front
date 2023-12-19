@@ -17,6 +17,7 @@ import NavbarGuest from "./Pages/NavbarGuest";
 import { ShoesContext } from "./Context";
 import './index.css';
 import Paymentgateway from "./Pages/Paymentgateway";
+import Loading from "./Pages/Loading";
 
 function App() {
   const [contextReady, setContextReady] = useState(false);
@@ -46,6 +47,8 @@ function App() {
         <Route path="/detailsusers" element={<DetailsUsers />} />
         <Route path="/successful" element={<Successful />} />
         <Route path="/tarjeta" element={<Paymentgateway />} />
+        <Route path="/loading" element={<Loading />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>
