@@ -9,7 +9,7 @@ const Card = () => {
   useEffect(() => {
     const fetchShoes = async () => {
       try {
-        const response = await fetch("http://127.0.0.1:5000/publicacion");
+        const response = await fetch("http://localhost:8080/publicaciones");
         if (response.ok) {
           const data = await response.json();
           if (Array.isArray(data)) {
@@ -30,17 +30,18 @@ const Card = () => {
 
   const handleAddToCart = (zapatilla) => {
     if (loggedInUser) {
-      const existingItem = carrito.find((item) => item.id === zapatilla.id);
+      const existingItem = carrito.find((item) => item.Id === zapatilla?.Id);
 
       if (existingItem) {
         const updatedCarrito = carrito.map((item) =>
-          item.id === zapatilla.id
-            ? { ...item, cantidad: item.cantidad + 1 }
-            : item
+          item.Id === zapatilla?.Id ? { ...item, quantity: item.quantity + 1 } : item
         );
+        console.log('Carrito antes de addToCart:', carrito);
         addToCart(updatedCarrito);
+        console.log('Carrito después de addToCart:', updatedCarrito);
       } else {
-        addToCart([...carrito, { ...zapatilla, cantidad: 1 }]);
+        addToCart([{ ...zapatilla, quantity: 1 }]);
+        console.log('Zapatilla agregada por primera vez al carrito:', zapatilla);
       }
     } else {
       console.log('Usuario no autenticado. Redirigir a la página de inicio de sesión.');
@@ -51,17 +52,17 @@ const Card = () => {
     <div className="row">
       <div className="card-container d-flex flex-wrap justify-content-around mb-4">
         {shoes.map((zapatilla) => (
-          <div key={zapatilla.id} className="card m-3 p-3" style={{ width: "18rem" }}>
+          <div key={zapatilla?.Id} className="card m-3 p-3" style={{ width: "18rem" }}>
             <img
-              src={zapatilla.imagen}
+              src={zapatilla?.Imagen}
               className="card-img-top"
-              alt={`Zapatillas ${zapatilla.modelo}`}
+              alt={`Zapatillas ${zapatilla?.Modelo}`}
             />
             <div className="card-body">
-              <h5 className="card-title">{`${zapatilla.marca}`}</h5>
-              <p className="card-text">{`Modelo: ${zapatilla.modelo}`}</p>
-              <p className="card-text">{`Año: ${zapatilla.año}`}</p>
-              <p className="card-text">{`Precio: $${zapatilla.precio}`}</p>
+              <h5 className="card-title">{`${zapatilla?.Marca || "Marca Desconocida"}`}</h5>
+              <p className="card-text">{`Modelo: ${zapatilla?.Modelo || "Modelo Desconocido"}`}</p>
+              <p className="card-text">{`Año: ${zapatilla?.Año || "Año Desconocido"}`}</p>
+              <p className="card-text">{`Precio: $${zapatilla?.Precio || 0}`}</p>
               <button
                 className="btn btn-success mx-2"
                 onClick={() => handleAddToCart(zapatilla)}
@@ -69,7 +70,7 @@ const Card = () => {
               >
                 Comprar
               </button>
-              <Link to={`/detalles/${zapatilla.id}`} className="btn btn-primary">
+              <Link to={`/detalles/${zapatilla?.Id}`} className="btn btn-primary">
                 Detalles
               </Link>
             </div>
@@ -81,3 +82,7 @@ const Card = () => {
 };
 
 export default Card;
+
+
+
+

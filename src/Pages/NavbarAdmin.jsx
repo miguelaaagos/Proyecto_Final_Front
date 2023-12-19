@@ -9,8 +9,8 @@ import { BiSearch } from 'react-icons/bi';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { ShoesContext } from '../Context';
 
-function NavbarAuth() {
-  const { carrito, loggedInUser, handleLogout } = useContext(ShoesContext);
+function NavbarAdmin() {
+  const {loggedInUser, handleLogout } = useContext(ShoesContext);
   const navigate = useNavigate();
   const [searchTerm, setSearchTerm] = useState('');
 
@@ -49,14 +49,11 @@ function NavbarAuth() {
                 <BiSearch style={{ textDecoration: 'none' }} />
               </Button>
             </Col>
-        <span className='mx-5 fw-bold text-white'>Bienvenido,
+        <span className='mx-5 fw-bold text-white mx-2'>Bienvenido,
           <NavLink to="/detailsusers" className="text-decoration-none mx-1 text-white">
-            {loggedInUser.Username}👨‍💼
+            {loggedInUser.username}👨‍💼
           </NavLink>
         </span>
-        <NavLink to="/carrito" className="text-decoration-none text-white">
-          🛒 ({carrito ? carrito.length : 0})
-        </NavLink>
         <Form inline className="ml-auto" onSubmit={handleSearch}>
           <Row className="align-items-center">
           </Row>
@@ -69,8 +66,4 @@ function NavbarAuth() {
   );
 }
 
-export default NavbarAuth;
-
-
-
-
+export default NavbarAdmin;

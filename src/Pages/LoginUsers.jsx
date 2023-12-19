@@ -1,16 +1,18 @@
 import React, { useState, useContext, useEffect } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ShoesContext } from "../Context";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Button, Alert, Spinner } from "react-bootstrap";
 
 const Login = () => {
-  const { handleLogin, loading, loggedInUser } = useContext(ShoesContext);
+  const { handleLogin, loading, loggedInUser, setLoggedInUser } = useContext(ShoesContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
   const [localError, setLocalError] = useState(null);
   const [userNotRegistered, setUserNotRegistered] = useState(false);
   const [formClosed, setFormClosed] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
+  const [showSpinner, setShowSpinner] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -23,19 +25,29 @@ const Login = () => {
     e.preventDefault();
     setLocalError(null);
     setUserNotRegistered(false);
+    setShowSpinner(true);
 
     try {
-      await handleLogin(email, password);
+      const { success, data, error } = await handleLogin(email, password);
 
-      if (!loggedInUser || Object.keys(loggedInUser).length === 0) {
+      if (!success) {
         setUserNotRegistered(true);
+        setLocalError(error || "Error al iniciar sesión.");
+        setShowSpinner(false);
         return;
       }
 
-      navigate("/");
+      setLoggedInUser(data.user);
+
+      setTimeout(() => {
+        setShowSpinner(false);
+        navigate("/");
+        console.log("Respuesta del servidor para login:", data.message);
+      }, 3000);
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
       setLocalError(error.message || "Error al iniciar sesión.");
+      setShowSpinner(false);
     }
   };
 
@@ -62,6 +74,7 @@ const Login = () => {
               ></button>
             </div>
             <div className="card-body">
+              {showSpinner && <Spinner animation="border" />}
               <h4 className="card-title text-center">Inicio de Sesión</h4>
               {userNotRegistered && (
                 <Alert variant="danger" className="mt-3">
@@ -119,11 +132,6 @@ const Login = () => {
                       Olvidaste la Contraseña
                     </NavLink>
                   </p>
-                  <p className="text-center">
-                    <NavLink to="/register" className="text-decoration-none">
-                      ¿No tienes una cuenta? Regístrate
-                    </NavLink>
-                  </p>
                 </div>
               </Form>
             </div>
@@ -135,3 +143,4 @@ const Login = () => {
 };
 
 export default Login;
+

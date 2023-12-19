@@ -1,13 +1,43 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { ShoesContext } from '../Context';
 import { formatNumber } from '../Price';
 import { NavLink } from 'react-router-dom';
 
 const Carrito = () => {
-  const { carrito, removeFromCart, incrementQuantity, decrementQuantity, isLoggedIn } = useContext(ShoesContext);
-  const [showLogin, setShowLogin] = useState(false);
+  const {
+    carrito,
+    removeFromCart,
+    incrementQuantity,
+    decrementQuantity,
+    loggedInUser,
+    clearCart,
+  } = useContext(ShoesContext);
 
-  console.log('Estado del carrito en Carrito component:', carrito);
+  if (!carrito) {
+    return <div>Loading...</div>;
+  }
+
+  const handleIrAPagar = () => {
+    console.log('Handling Ir a Pagar');
+    if (loggedInUser) {
+      console.log('Finalizando compra...');
+      clearCart();
+    } else {
+      console.log('Usuario no autenticado. Redirigir a la página de inicio de sesión.');
+    }
+  };
+
+  const getTotal = () => {
+    return carrito.reduce((acc, cartItem) => {
+      const product = cartItem[0];
+
+      if (product && typeof product.Precio === 'number' && typeof cartItem.quantity === 'number') {
+        return acc + product.Precio * cartItem.quantity;
+      }
+
+      return acc;
+    }, 0);
+  };
 
   return (
     <div className="container1">
@@ -16,55 +46,49 @@ const Carrito = () => {
         <div className="p-3 bg-white">
           {carrito.map((cartItem, index) => {
             const product = cartItem[0];
-
-            return (
+            return product ? (
               <div key={index} className="d-flex justify-content-between py-2">
                 <div className="d-flex justify-content-between align-items-center">
-                  {product && (
-                    <>
-                      <img src={product.imagen} width="50" alt="" />
-                      <h6 className="mb-0 text-capitalize p-2">{`${product.año} ${product.marca} ${product.modelo}`}</h6>
-                    </>
-                  )}
+                  <img src={product.Imagen} width="50" alt="" />
+                  <h6 className="mb-0 text-capitalize p-2">{`${product.Año} ${product.Marca} ${product.Modelo}`}</h6>
                 </div>
                 <div className="d-flex justify-content-end align-items-center">
-                  {product && (
-                    <>
-                      <h6 className="mb-0 p-2 text-success">
-                        ${formatNumber(product.precio * cartItem.quantity)}
-                      </h6>
-                      <button
-                        className="btn btn-secondary"
-                        onClick={() => decrementQuantity(product.id)}
-                      >
-                        -
-                      </button>
-                      <b className="mx-2">{cartItem.quantity}</b>
-                      <button
-                        className="btn btn-dark"
-                        onClick={() => incrementQuantity(product.id)}
-                      >
-                        +
-                      </button>
-                    </>
-                  )}
+                  <h6 className="mb-0 p-2 text-success">
+                    ${formatNumber(product.Precio * cartItem.quantity)}
+                  </h6>
+                  <button
+                    className="btn btn-secondary"
+                    onClick={() => decrementQuantity(product.Id)}
+                  >
+                    -
+                  </button>
+                  <b className="mx-2">{cartItem.quantity}</b>
+                  <button
+                    className="btn btn-dark"
+                    onClick={() => incrementQuantity(product.Id)}
+                  >
+                    +
+                  </button>
                 </div>
               </div>
-            );
+            ) : null;
           })}
-          <h2 className="my-4">Total: ${formatNumber(
-            carrito.reduce((acc, cartItem) => (cartItem[0] ? acc + cartItem[0].precio * cartItem.quantity : acc), 0)
-          )}</h2>
-          <NavLink to="/successful" className="text-decoration-none">
-            <button className="btn btn-success">
-              Finalizar Compra
-            </button>
-          </NavLink>
-          <NavLink to="/" className="text-decoration-none">
-            <button className="btn btn-primary mx-5">
-              Seguir Comprando
-            </button>
-          </NavLink>
+          <h2 className="my-4">Total: ${formatNumber(getTotal())}</h2>
+
+          {carrito.length > 0 && (
+            <>
+              <NavLink to="/tarjeta" className="text-decoration-none">
+                <button className="btn btn-success" onClick={handleIrAPagar}>
+                  Finalizar Compra
+                </button>
+              </NavLink>
+              <NavLink to="/" className="text-decoration-none">
+                <button className="btn btn-primary mx-5">
+                  Seguir Comprando
+                </button>
+              </NavLink>
+            </>
+          )}
         </div>
       </div>
     </div>
@@ -72,5 +96,3 @@ const Carrito = () => {
 };
 
 export default Carrito;
-
-

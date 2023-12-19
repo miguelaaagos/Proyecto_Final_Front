@@ -5,12 +5,12 @@ import Swal from "sweetalert2";
 const RegisterProduct = () => {
   const navigate = useNavigate();
   const [productData, setProductData] = useState({
-    marca: '',
-    modelo: '',
-    año: '',
-    precio: '',
-    descripcion: '',
-    imagen: '',
+    marca: "",
+    modelo: "",
+    año: "",
+    precio: "",
+    descripcion: "",
+    imagen: "",
   });
 
   const handleChange = (e) => {
@@ -23,34 +23,41 @@ const RegisterProduct = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch('http://127.0.0.1:5000/publicacion', {
-        method: 'POST',
+      const response = await fetch(`http://localhost:8080/publicaciones`, {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(productData),
+        body: JSON.stringify({
+          ...productData,
+        }),
       });
 
+      const responseData = await response.json();
+
       if (response.ok) {
-        const { message } = await response.json();
+        const { message } = responseData;
         Swal.fire({
-          title: 'Producto Registrado!',
+          title: "Producto Registrado!",
           text: `${message}\nMarca: ${productData.marca}\nModelo: ${productData.modelo}\nPrecio: ${productData.precio}`,
-          icon: 'success',
-          confirmButtonText: 'Aceptar',
+          icon: "success",
+          confirmButtonText: "Aceptar",
         });
 
         navigate("/");
       } else {
-        throw new Error("Error al registrar el producto");
+        const errorMessage = responseData.message || "Error al registrar el producto";
+        console.error("Error al registrar el producto. Detalles:", responseData);
+        throw new Error(errorMessage);
       }
     } catch (error) {
       console.error("Error:", error.message);
+      const errorMessage = error.response ? error.response.statusText : error.message;
       Swal.fire({
-        title: "Error",
-        text:
-          "Hubo un error al registrar el producto. Por favor, inténtalo de nuevo.",
+        title: "Error al registrar el producto",
+        text: errorMessage,
         icon: "error",
       });
     }

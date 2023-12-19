@@ -10,16 +10,14 @@ const ForgotPassword = () => {
   const handleForgotPassword = async () => {
     try {
       setLoading(true);
-      const response = await fetch('http://127.0.0.1:5000/usuario/recuperar', {
+      const response = await fetch('http://localhost:8080/recuperar-contrasena', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/x-www-form-urlencoded',
         },
-        body: JSON.stringify({
-          email: email,
-        }),
+        body: `email=${email}`,
       });
-
+  
       if (response.ok) {
         Swal.fire({
           icon: 'success',
@@ -27,17 +25,24 @@ const ForgotPassword = () => {
           text: 'Se ha enviado un correo de recuperación de contraseña. Por favor, verifica tu bandeja de entrada.',
           timer: 2000,
         });
-
+  
         setTimeout(() => {
           navigate('/');
         }, 3000);
-
+  
+      } else if (response.status === 400) {
+        // El correo electrónico no está registrado
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'El correo electrónico no está registrado',
+        });
       } else {
         const responseData = await response.json();
         Swal.fire({
           icon: 'error',
           title: 'Error',
-          text: responseData.message || 'Error desconocido',
+          text: responseData.error || 'Error desconocido',
         });
       }
     } catch (error) {
@@ -46,7 +51,7 @@ const ForgotPassword = () => {
       setLoading(false);
     }
   };
-
+  
   return (
     <div className="container1">
       <div className="row justify-content-center mt-5">
@@ -84,3 +89,4 @@ const ForgotPassword = () => {
 };
 
 export default ForgotPassword;
+

@@ -8,11 +8,11 @@ body {
   padding: 0;
   background-color: white;
   font-family: 'Roboto', Arial, sans-serif;
-  color: #212529; /* Color de texto principal, ajusta según tus preferencias */
+  color: #212529; 
 }
 
 .container1 {
-  min-height: 100vh; /*importante*/
+  min-height: 100vh;
 }
 
 #form {
