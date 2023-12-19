@@ -11,21 +11,43 @@ const DetailsUsers = () => {
   const [postIdToDelete, setPostIdToDelete] = useState(null);
   const [postIdToModify, setPostIdToModify] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
-  const [editedPostData, setEditedPostData] = useState({});
+  const [editedPostData, setEditedPostData] = useState({
+    Marca: "",
+    Modelo: "",
+    Año: "",
+    Precio: "",
+    Imagen: "",
+  });
   const { loggedInUser } = useContext(ShoesContext);
   const navigate = useNavigate();
 
-  const showUserPosts = async () => {
-      try {
-      const postsResponse = await fetch(`http://127.0.0.1:5000/publicacion`);
+  const fetchUserPosts = async () => {
+    try {
+      if (!loggedInUser || typeof loggedInUser.id === 'undefined') {
+        return;
+      }
+  
+      const postsResponse = await fetch(`http://localhost:8080/publicaciones?usuarioID=${loggedInUser.id}`);
       const userPostsJson = await postsResponse.json();
-      setUserPosts(userPostsJson);
+  
+      if (Array.isArray(userPostsJson)) {
+        setUserPosts(userPostsJson);
+      } else {
+        console.error('Error en el formato de las publicaciones recibidas:', userPostsJson);
+      }
     } catch (error) {
       console.error('Error fetching user posts:', error);
     }
   };
+  
 
   const handleDeletePost = async (postId) => {
+    console.log('Deleting post with ID:', postId);
+    if (!postId) {
+      console.error('Invalid post ID');
+      return;
+    }
+
     const result = await Swal.fire({
       title: '¿Estás seguro?',
       text: '¡No podrás revertir esto!',
@@ -38,10 +60,10 @@ const DetailsUsers = () => {
 
     if (result.isConfirmed) {
       try {
-        await fetch(`http://127.0.0.1:5000/publicacion/${postId}`, {
+        await fetch(`http://localhost:8080/publicaciones/${postId}`, {
           method: 'DELETE',
         });
-        showUserPosts();
+        fetchUserPosts();
       } catch (error) {
         console.error('Error deleting post:', error);
       }
@@ -49,7 +71,11 @@ const DetailsUsers = () => {
   };
 
   const handleModifyPost = (postId) => {
-    const postToEdit = userPosts.find((post) => post.id === postId);
+    const postToEdit = userPosts.find((post) => post.ID === postId);
+    if (!postToEdit) {
+      console.error('Invalid post data for modification');
+      return;
+    }
     setEditedPostData(postToEdit);
     setPostIdToModify(postId);
     setShowEditModal(true);
@@ -58,12 +84,18 @@ const DetailsUsers = () => {
   const handleCloseEditModal = () => {
     setShowEditModal(false);
     setPostIdToModify(null);
-    setEditedPostData({});
+    setEditedPostData({
+      Marca: "",
+      Modelo: "",
+      Año: "",
+      Precio: "",
+      Imagen: "",
+    });
   };
 
   const handleSaveEditedPost = async () => {
     try {
-      await fetch(`http://127.0.0.1:5000/publicacion/${postIdToModify}`, {
+      await fetch(`http://localhost:8080/publicaciones/${postIdToModify}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -73,7 +105,13 @@ const DetailsUsers = () => {
 
       setShowEditModal(false);
       setPostIdToModify(null);
-      setEditedPostData({});
+      setEditedPostData({
+        Marca: "",
+        Modelo: "",
+        Año: "",
+        Precio: "",
+        Imagen: "",
+      });
 
       Swal.fire({
         icon: 'success',
@@ -82,7 +120,7 @@ const DetailsUsers = () => {
         timer: 1500,
       });
 
-      showUserPosts();
+      fetchUserPosts();
     } catch (error) {
       console.error('Error modifying post:', error);
     }
@@ -98,7 +136,7 @@ const DetailsUsers = () => {
 
   useEffect(() => {
     if (loggedInUser) {
-      showUserPosts();
+      fetchUserPosts();
     }
   }, [loggedInUser]);
 
@@ -109,7 +147,7 @@ const DetailsUsers = () => {
   return (
     <div className='text-center'>
       <img src={backgroundImage} alt="404" style={{ height: '200px' }} />
-      <h1>Usuario: {loggedInUser.Username}</h1>
+      <h1 className='fw-bold'>Usuario: {loggedInUser.username}</h1>
       <div className="mx-auto d-flex align-items-center">
         <Col xs="auto">
           <Button type="submit">
@@ -126,20 +164,20 @@ const DetailsUsers = () => {
         </button>
       </div>
       <div>
-        <h2>Publicaciones del Usuario</h2>
+        <h2 className='mb-5 mt-3 fw-bold'>Publicaciones del Usuario</h2>
         {userPosts.map((post) => (
-          <div key={post.id}>
+          <div key={post.ID}>
             <div className="d-flex justify-content-between mx-5 px-5">
-              <img src={post.imagen} alt={`Imagen de ${post.marca} ${post.modelo}`} style={{ height: '100px' }} />
-              <p>Marca: {post.marca}</p>
-              <p>Modelo: {post.modelo}</p>
-              <p>Año: {post.año}</p>
-              <p>Precio: {post.precio}</p>
+              <img src={post.Imagen} alt={`Imagen de ${post.Marca} ${post.Modelo}`} style={{ height: '100px' }} />
+              <p>Marca: {post.Marca}</p>
+              <p>Modelo: {post.Modelo}</p>
+              <p>Año: {post.Año}</p>
+              <p>Precio: {post.Precio}</p>
               <div>
-                <button className="btn btn-danger mx-2" onClick={() => handleDeletePost(post.id)}>
+                <button className="btn btn-danger mx-2" onClick={() => handleDeletePost(post.ID)}>
                   Eliminar
                 </button>
-                <button className="btn btn-primary ml-2" onClick={() => handleModifyPost(post.id)}>
+                <button className="btn btn-primary ml-2" onClick={() => handleModifyPost(post.ID)}>
                   Modificar
                 </button>
               </div>
@@ -158,8 +196,8 @@ const DetailsUsers = () => {
               <Form.Control
                 type="text"
                 placeholder="Ingrese la marca"
-                value={editedPostData.marca || ''}
-                onChange={(e) => setEditedPostData({ ...editedPostData, marca: e.target.value })}
+                value={editedPostData.Marca || ''}
+                onChange={(e) => setEditedPostData({ ...editedPostData, Marca: e.target.value })}
               />
             </Form.Group>
             <Form.Group controlId="formModelo">
@@ -167,8 +205,8 @@ const DetailsUsers = () => {
               <Form.Control
                 type="text"
                 placeholder="Ingrese el modelo"
-                value={editedPostData.modelo || ''}
-                onChange={(e) => setEditedPostData({ ...editedPostData, modelo: e.target.value })}
+                value={editedPostData.Modelo || ''}
+                onChange={(e) => setEditedPostData({ ...editedPostData, Modelo: e.target.value })}
               />
             </Form.Group>
             <Form.Group controlId="formAño">
@@ -176,8 +214,8 @@ const DetailsUsers = () => {
               <Form.Control
                 type="number"
                 placeholder="Ingrese el año"
-                value={editedPostData.año || ''}
-                onChange={(e) => setEditedPostData({ ...editedPostData, año: e.target.value })}
+                value={editedPostData.Año || ''}
+                onChange={(e) => setEditedPostData({ ...editedPostData, Año: e.target.value })}
               />
             </Form.Group>
             <Form.Group controlId="formPrecio">
@@ -185,8 +223,8 @@ const DetailsUsers = () => {
               <Form.Control
                 type="number"
                 placeholder="Ingrese el precio"
-                value={editedPostData.precio || ''}
-                onChange={(e) => setEditedPostData({ ...editedPostData, precio: e.target.value })}
+                value={editedPostData.Precio || ''}
+                onChange={(e) => setEditedPostData({ ...editedPostData, Precio: e.target.value })}
               />
             </Form.Group>
             <Form.Group controlId="formImagen">
@@ -194,8 +232,8 @@ const DetailsUsers = () => {
               <Form.Control
                 type="text"
                 placeholder="Ingrese la URL de la imagen"
-                value={editedPostData.imagen || ''}
-                onChange={(e) => setEditedPostData({ ...editedPostData, imagen: e.target.value })}
+                value={editedPostData.Imagen || ''}
+                onChange={(e) => setEditedPostData({ ...editedPostData, Imagen: e.target.value })}
               />
             </Form.Group>
           </Form>

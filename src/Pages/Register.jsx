@@ -13,10 +13,11 @@ const RegisterUsers = () => {
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.id]: e.target.value });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:8080/crear-usuario", {
+      const response = await fetch("http://localhost:8080/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -28,6 +29,8 @@ const RegisterUsers = () => {
         }),
       });
 
+      console.log("Respuesta del servidor para register:", response);
+
       if (response.ok) {
         Swal.fire({
           title: "¡Gracias por registrarte!",
@@ -37,6 +40,8 @@ const RegisterUsers = () => {
 
         navigate("/");
       } else {
+        console.error("Error al registrar:", response.statusText);
+
         Swal.fire({
           title: "Error al registrarse",
           text: "Por favor, verifica tus datos e inténtalo de nuevo.",
@@ -44,7 +49,8 @@ const RegisterUsers = () => {
         });
       }
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error en la solicitud:", error);
+
       Swal.fire({
         title: "Error al registrarse",
         text: "Ocurrió un error inesperado. Por favor, inténtalo de nuevo más tarde.",
@@ -58,7 +64,7 @@ const RegisterUsers = () => {
       <form className="w-50 bg-light mb-4 mx-auto text-center" onSubmit={handleSubmit}>
         <div className="card" id="form">
           <div className="card-body">
-            <h4 className="card-title text-center mb-2">Registro de Usuarios</h4>
+          <h4 className="card-title text-center mb-2">Registro de Usuarios</h4>
             <div className="mt-3">
               <label htmlFor="email" className="form-label fs-5">
                 E-mail

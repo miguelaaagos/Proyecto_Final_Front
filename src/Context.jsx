@@ -8,12 +8,13 @@ const ShoesProvider = ({ children }) => {
   const [loading, setLoading] = useState(false);
   const [carrito, setCarrito] = useState([]);
 
+
   const handleLogin = async (email, password) => {
     try {
       setError(null);
       setLoading(true);
-
-      const response = await fetch('http://localhost:8080/iniciar-sesion', {
+  
+      const response = await fetch('http://localhost:8080/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -23,96 +24,145 @@ const ShoesProvider = ({ children }) => {
           password: password,
         }),
       });
-
-      const responseData = await response.json();
-
+  
       if (!response.ok) {
-        throw new Error(responseData.error || 'Hubo un problema al iniciar sesión.');
+        throw new Error('Hubo un problema al iniciar sesión.');
       }
-
+  
+      const responseData = await response.json();
+  
+      localStorage.setItem('loggedInUser', JSON.stringify(responseData.user));
       setLoggedInUser(responseData.user);
-      return response;
+  
+      return { success: true, data: responseData };
     } catch (error) {
       console.error('Error al procesar la solicitud:', error);
-      setError('Error al procesar la solicitud.');
+      setError(error.message || 'Error al procesar la solicitud.');
+      return { success: false, error: error.message };
     } finally {
       setLoading(false);
     }
   };
 
   const addToCart = (product) => {
-    const updatedCart = [...carrito];
-    const updatedItemIndex = updatedCart.findIndex(
-      (item) => item.id === product.id
-    );
-
-    if (updatedItemIndex >= 0) {
-      updatedCart[updatedItemIndex].quantity += 1;
+    const existingItem = carrito.find(item => item.Id === product.Id);
+  
+    if (existingItem) {
+      const updatedCart = carrito.map(item =>
+        item.Id === product.Id
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+      updateLocalStorage('cart', updatedCart);
+      setCarrito(updatedCart);
     } else {
-      updatedCart.push({ ...product, quantity: 1 });
+
+      const updatedCart = [...carrito, { ...product, quantity: 1 }];
+      updateLocalStorage('cart', updatedCart);
+      setCarrito(updatedCart);
     }
-
-    const updatedCartForLocalStorage = updatedCart.map(({ quantity, ...rest }) => rest);
-    localStorage.setItem('cart', JSON.stringify(updatedCartForLocalStorage));
-
-    setCarrito(updatedCart);
   };
-
-  const handleLogout = () => {
-    setLoggedInUser(null);
-    localStorage.removeItem('user');
-  };
-
+  
   const removeFromCart = (productId) => {
-    const updatedCart = carrito.filter((product) => product.id !== productId);
-    setCarrito(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+    const updatedCart = carrito.map(item => {
+      if (item.Id === productId) {
+        const updatedItem = { ...item, quantity: Math.max(0, item.quantity - 1) };
+        return updatedItem;
+      }
+      return item;
+    });
+  
+    const filteredCart = updatedCart.filter(item => item.quantity > 0);
+  
+    updateLocalStorage('cart', filteredCart);
+    setCarrito(filteredCart);
   };
 
   const incrementQuantity = (productId) => {
-    const updatedCart = carrito.map((product) =>
-      product.id === productId ? { ...product, quantity: product.quantity + 1 } : product
+    const updatedCart = carrito.map(item =>
+      item.Id === productId
+        ? { ...item, quantity: item.quantity + 1 }
+        : item
     );
+  
+    updateLocalStorage('cart', updatedCart);
     setCarrito(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
   };
 
   const decrementQuantity = (productId) => {
-    const updatedCart = carrito.map((product) =>
-      product.id === productId ? { ...product, quantity: product.quantity - 1 } : product
+    const updatedCart = carrito.map(item =>
+      item.Id === productId
+        ? { ...item, quantity: Math.max(item.quantity - 1, 0) }
+        : item
     );
-    setCarrito(updatedCart);
-    localStorage.setItem('cart', JSON.stringify(updatedCart));
+  
+    const filteredCart = updatedCart.filter(item => item.quantity > 0);
+  
+    updateLocalStorage('cart', filteredCart);
+    setCarrito(filteredCart);
   };
 
-  useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
-    console.log('Cart from localStorage:', cart);
-    setCarrito(cart);
-    localStorage.clear();
-  }, []);
-  
+  const getLocalStorageItem = (key) => {
+    try {
+      const item = localStorage.getItem(key);
+      return item ? JSON.parse(item) : null;
+    } catch (error) {
+      console.error(`Error al obtener el item ${key} del localStorage:`, error);
+      return null;
+    }
+  };
+
+  const updateLocalStorage = (key, data) => {
+    try {
+      console.log(`Updating ${key} in localStorage with data:`, data);
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (error) {
+      console.error(`Error updating ${key} in localStorage:`, error);
+    }
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('loggedInUser');
+    setLoggedInUser(null);
+  };
+
+  const clearCart = () => {
+    updateLocalStorage('cart', []);
+    setCarrito([]);
+  };
+
 
   const contextValue = {
-    loggedInUser,
+    clearCart,
+    carrito,
     handleLogout,
+    loggedInUser,
+    handleLogin,
     error,
     loading,
-    handleLogin,
-    carrito,
     addToCart,
     removeFromCart,
     incrementQuantity,
     decrementQuantity,
+    authToken: loggedInUser ? loggedInUser.token : null,
   };
+
+  useEffect(() => {
+    const loggedInUserFromLocalStorage = getLocalStorageItem('loggedInUser');
+    const cartFromLocalStorage = getLocalStorageItem('cart');
+
+    if (loggedInUserFromLocalStorage) {
+      setLoggedInUser(loggedInUserFromLocalStorage);
+    }
+
+    if (cartFromLocalStorage) {
+      setCarrito(cartFromLocalStorage);
+    }
+  }, []);
 
   return <ShoesContext.Provider value={contextValue}>{children}</ShoesContext.Provider>;
 };
 
 export { ShoesProvider, ShoesContext };
-
-
-
-
 
 

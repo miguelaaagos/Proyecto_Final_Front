@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavLink, useNavigate } from "react-router-dom";
 
 const Paymentgateway = () => {
@@ -11,6 +12,15 @@ const Paymentgateway = () => {
   const navigate = useNavigate();
 
   const handleInputChange = (e, setter) => {
+
+    const inputValue = e.target.value;
+    if (setter === setCardNumber || setter === setSecurityCode) {
+      if (!/^\d*$/.test(inputValue)) {
+        return;
+      }
+    }
+    setter(inputValue);
+
     let inputValue = e.target.value;
 
     if (setter === setCardNumber || setter === setSecurityCode) {
@@ -18,25 +28,21 @@ const Paymentgateway = () => {
     }
 
     if (setter === setExpiryDate) {
-      // Update expiryDate with "/" after 2 digits
+
       if (inputValue.length === 2) {
         inputValue += "/";
       }
-      // Allow deletion of all characters after the "/" character
       else if (inputValue.length >= 3) {
         inputValue = inputValue.slice(0, 2) + "/" + inputValue.slice(3);
       }
     }
-
-    // Limit card number length to 16
     const formattedValue = inputValue.slice(0, 16);
 
-    // Add spaces every 4 digits (except for the last 4)
+
     const spacedValue = formattedValue.replace(/(\d{4})(?=.)/g, "$1 ");
 
     setter(spacedValue);
 
-    // Update state variables for button enablement
     const allFieldsFilled =
       cardNumber !== "" &&
       cardName !== "" &&
@@ -67,6 +73,12 @@ const Paymentgateway = () => {
               <input
                 type="text"
                 className="form-control"
+                id=""
+                placeholder="Número de tarjeta"
+                value={cardNumber}
+                onChange={(e) => handleInputChange(e, setCardNumber)}
+                pattern="[0-9]*"
+                maxLength="19"
                 id="Numeros"
                 value={cardNumber}
                 onChange={(e) => handleInputChange(e, setCardNumber)}
@@ -169,13 +181,14 @@ const Paymentgateway = () => {
           <div
             className="card-footer" style={{ display: "flex", justifyContent: "end" }}
           >
+            <button type="submit" className="btn btn-primary" disabled={!isButtonEnabled}>
+              Realizar Pago
+            </button>
             <NavLink to="/" className="Text-decoration-none">
               <button type="submit" className="btn btn-secondary m-2">
                 Cancelar
               </button>
             </NavLink>
-
-
             <NavLink to="/Loading" className="Text-decoration-none">
               <button type="submit" className="btn btn-primary m-2" disabled={!isButtonEnabled}>
                 Realizar Pago
@@ -187,4 +200,8 @@ const Paymentgateway = () => {
     </div>
   );
 };
+
 export default Paymentgateway;
+
+
+
